@@ -1,0 +1,42 @@
+.out {
+  display:block; 
+  background:#bbb; 
+  border:1px solid #ddd; 
+  position:relative;
+  margin:1em 0;
+  }
+
+.in2 {
+  display:block; 
+  background:#777; 
+  border:1px solid #999; 
+  position:relative;
+  padding:1px;
+  margin:1px;
+  }
+
+.in {
+  background:#fff; 
+  border:1px solid #555; 
+  position:relative; 
+  padding:5px;
+  font-weight:normal;
+  }
+
+.ltin {
+  left:-5px;
+  }
+
+.tpin {
+  top:-5px;
+  }
+
+.rtin {
+  left:5px;
+  }
+
+.narrow {width:8em;}
+
+.normal {width:180px;}
+
+.wide {width:95%;}

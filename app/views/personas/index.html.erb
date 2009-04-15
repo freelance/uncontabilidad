@@ -1,0 +1,38 @@
+<h1></h1>
+
+
+<span class="left"><h1 id="accounts_count"><%= 'Personas (%s)' % @personas.size %> | Listado</h1>
+<h2> <td><span class="green">General   </span></td></h2>
+
+<%= link_to 'Nueva persona', new_persona_path%></span></span> 
+<h3 class="flash"><%= flash[:notice] %></h3>
+
+
+<table class="list">
+  <tr>
+    <th>Nombre</th>
+    <th>Apellido</th>
+    <th>Direccion</th>
+    <th>Email</th>
+    <th>Telefono</th>
+    <th>Identificacion</th>
+  </tr>
+
+<% for persona in @personas %>
+  <tr  class="<%= cycle('odd','par') %>">
+    <td><%=h persona.name %></td>
+    <td><%=h persona.apellido %></td>
+    <td><%=h persona.direccion %></td>
+    <td><%=h persona.email %></td>
+    <td><%=h persona.telefono %></td>
+    <td><%=h persona.identificacion %></td>
+    <td><%= link_to 'Show', persona %></td>
+    <td><%= link_to 'Edit', edit_persona_path(persona) %></td>
+    <td><%= link_to 'Destroy', persona, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+

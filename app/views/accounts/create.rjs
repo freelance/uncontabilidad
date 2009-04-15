@@ -1,0 +1,4 @@
+page.insert_html :bottom, :accounts, :partial => 'accounts/account', :object => @account
+page.replace_html :accounts_count, pluralize(@account.size, 'account')
+page[:account_form].reset
+page[:remote_account_form].hide

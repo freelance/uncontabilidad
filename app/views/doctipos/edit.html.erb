@@ -1,0 +1,16 @@
+<h1>Editing doctipo</h1>
+
+<% form_for(@doctipo) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @doctipo %> |
+<%= link_to 'Back', doctipos_path %>

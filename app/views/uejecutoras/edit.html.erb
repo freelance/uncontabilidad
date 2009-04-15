@@ -1,0 +1,32 @@
+<h1>Editando Unidad Ejecutora</h1>
+
+<% form_for(@uejecutora) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :Nombre %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :Cuenta %><br />
+    <%= f.text_field :account %>
+  </p>
+  <p>
+    <%= f.label :descripcion %><br />
+    <%= f.text_area :descripcion %>
+  </p>
+  <p>
+    <%= f.label :persona %><br />
+    <%= f.text_field :persona %>
+  </p>
+  <p>
+    <%= f.label :departamento %><br />
+    <%= f.text_field :departamento %>
+  </p>
+  <p>
+    <%= f.submit "Actualizar" %>
+  </p>
+<% end %>
+
+<%= link_to 'Mostrar', @uejecutora %> |
+<%= link_to 'Atras', uejecutoras_path %>

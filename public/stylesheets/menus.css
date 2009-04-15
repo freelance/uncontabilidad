@@ -1,0 +1,67 @@
+     * /* "Universal rule". Set's border, padding and margin to 0 for all CSS values*/
+    padding: 0;
+    margin: 0;
+    border: 0;
+    }
+    .Menu {
+    font-family: Arial, sans-serif;
+    border-bottom: 1px solid #ccc;
+    font-size: 11px;
+   text-align: left; /* We are using text-align: left on ul to left align our menu to the page. If you want the menu aligned centered or right just change text-align to either center or right */
+   margin: 5px 0 5px 10px;
+   padding: 0 0 3px 0;
+   }
+  Menu li {
+   margin: 0 2px 0 0;
+  border-bottom: none;
+   display: inline; /* Menu links are horizontally aligned using display: inline */
+   }
+   .Menu li a {
+   margin: 0 -2px 0 0;
+   padding: 3px 12px 3px 12px; /* Display: block won't work in this example, instead we are using padding */
+   color: #666;
+   text-decoration: none;
+   border: 1px solid #ccc;
+   background: #f5f5f5;
+   }
+   .Menu li a:hover {
+   background: #ededed;
+   color: #000;
+   }
+   .Menu li#active {
+   margin: 0 3px 0 0;
+   padding: 3px 6px 3px 8px; /* Display: block won't work in this example, instead we are using padding */
+   background: white;
+   border: 1px solid #ccc;
+   border-bottom: 1px solid white;
+  }
+  .Menu li a:hover {
+   background: #ededed;
+   color: #000;
+   }
+  .Menu .subMenu
+   float: left;
+   text-align: left; /* If both menus are going to be left-aligned we really don't need to use text-align: left on the sub menu, since this menu will inherit the alignment from .Menu */
+   width: 100%;
+   margin: 6px 0 5px 0;
+   padding: 3px 0 3px 0;
+   border-bottom: 2px solid #F89226;
+   }
+   * html .Menu .subMenu {
+   margin: 2px 0 5px 0; /* IE hack */
+   }
+   .Menu .subMenu li {
+   padding: 3px 0 3px 0;
+   border: 0;
+   }
+  .Menu .subMenu li a {
+  border: 0;
+   background-color: #fc9;
+   }
+   .Menu .subMenu li a:hover {
+   background: #d4de7c;
+   }
+   .Menu .subMenu li#subActive {
+   padding: 3px 6px 3px 8px;
+   font-weight: bold;
+   }

@@ -1,0 +1,38 @@
+<span class="left"><h1 id="accounts_count">Nueva Unidad Ejecutora</h1>
+<h2> <td><span class="green">General   </span></td></h2>
+<%#= link_to 'Nueva Unidad Ejecutora', new_uejecutora_path %></span>
+<h3 class="flash"><%= flash[:notice] %></h3>
+
+
+<% form_for(@uejecutora) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :Nombre %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :Cuenta %><br />
+    <%= f.collection_select :account_id, Account.all( :order => :code ), :id, :to_s %>
+  </p>
+  <p>
+    <%= f.label :descripcion %><br />
+    <%= f.text_area :descripcion %>
+  </p>
+  <p>
+    <%= f.label :persona_id %><br />
+    <%= f.collection_select :persona_id, Persona.all( :order => :apellido ), :id, :to_s %>
+    <%= link_to "Nuevo", new_persona_path, :class => "nuevo" %>
+  </p>
+  <p>
+    <%= f.label :departamento_id %><br />
+    <%= f.collection_select :departamento_id, Departamento.all( :order => :nombre ), :id, :nombre %>
+    <%= link_to "Nuevo", new_departamento_path, :class => "nuevo" %>
+  </p>
+  <p>
+    <%= f.submit "Crear" %>
+  </p>
+<% end %>
+
+<%= link_to 'Atras', uejecutoras_path %>
+</span>

@@ -1,0 +1,28 @@
+<span class="left"><h1 id="accounts_count">Nueva Cuenta</h1>
+<h2> <td><span class="green">General   </span></td></h2>
+</span></span>
+<h3 class="flash"><%= flash[:notice] %></h3>
+
+
+<% form_for(@account) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :parent_id %><br />
+    <%= f.collection_select :parent_id, Account.all(:order => :code), :id, :to_s, :include_blank => true %>
+  </p>
+  <p>
+    <%= f.label :Nombre %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :Balance %><br />
+    <%= f.text_field :balance %>
+  </p>
+  <p>
+    <%= f.submit "Crear" , :or => link_to ('Atras', accounts_path) %>
+   
+  </p>
+<% end %>
+
+

@@ -1,0 +1,11 @@
+<h1>Editando transacciones</h1>
+
+<% form_for([@account,@transaction]) do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+
+  <p>
+    <%= f.submit "Actualizar" %>
+  </p>
+<% end %>
+
+<%= link_to 'Atras', account_transactions_path(@account) %>

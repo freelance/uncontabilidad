@@ -1,0 +1,1 @@
+<td><%= t.to == account.id ? 'C' : 'D' %></td> => <td><%= t.to.id == account.id ? 'C' : 'D' %></td>

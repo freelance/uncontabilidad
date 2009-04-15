@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />   
+    <title>UNCO</title>
+      <%= javascript_include_tag "t_s_gen" %>
+      <%#= javascript_include_tag "jquery-latest.pack" %>
+      <%#= javascript_include_tag "stuHover" %>
+      <%#= javascript_include_tag "windows" %>
+        <%#= stylesheet_link_tag 'eltema' %>
+    	<%#= stylesheet_link_tag 'mephisto' %>
+	    <%#= stylesheet_link_tag 'fullscreen' %>
+      <%= stylesheet_link_tag "zsnazzy" %>
+      <%= stylesheet_link_tag "tys" %>
+      <%= stylesheet_link_tag "botones_sel" %>
+      <%= stylesheet_link_tag "ver_nav_menu" %>
+      <%= stylesheet_link_tag "dropdown" %>
+      <%= stylesheet_link_tag "pro_drop_1" %>
+      <%= javascript_include_tag "prototype" %>
+	    <%= javascript_include_tag :defaults %>
+      <%= active_scaffold_includes %>
+
+      <%= calendar_date_select_includes(:style => "silver", :format => :italian, :locale => "es.js") %>
+      <%= record_select_includes %>
+  </head>
+  <body id="body-account">
+  
+    <div class="out wide">
+      <div class="in ltin tpin">
+          <table width="100%" height="600" border="0" border="0" align="center" cellpadding="0" cellspacing="0" >
+              <tr>
+                <td style="vertical-align:top" height="40px">
+                  <%= render "layouts/menusuperior.html.erb" %>
+                </td>
+              </tr>
+              <tr>
+                <td style="vertical-align:top;padding-left: 0px;margin-left: 0px">
+                  <% if flash[:notice] -%>
+                      <div id="notice"><%= flash[:notice] %></div>
+                  <% end -%>
+                  <div id="contenido">
+                    <div id="menulateral" style="position: relative;float: left;width: 15%;vertical-align: top;padding-left: 0px ">
+                      <%= render "layouts/menulateral.html.erb" %>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+          </table>
+      </div>
+    </div>
+  </body>
+</html>
+   
+    
+     

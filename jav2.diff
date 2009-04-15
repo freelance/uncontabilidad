@@ -1,0 +1,1348 @@
+From 1a1109d44486ac7bfcb37103b11e8b2540043e59 Mon Sep 17 00:00:00 2001
+From: Javier Barcena <javierbuilder@gmail.com>
+Date: Wed, 4 Mar 2009 17:18:11 +1100
+Subject: [PATCH 1/2] Fixed up uejecutora views and default page/route
+
+---
+ app/controllers/accounts_controller.rb      |    2 +-
+ app/controllers/departamentos_controller.rb |    4 +-
+ app/controllers/personas_controller.rb      |    4 +-
+ app/controllers/uejecutoras_controller.rb   |    2 +-
+ app/models/account.rb                       |    4 +
+ app/models/departamento.rb                  |    3 +
+ app/models/persona.rb                       |    3 +
+ app/views/accounts/index.html.erb           |    2 +-
+ app/views/departamentos/new.html.erb        |    2 +-
+ app/views/layouts/application.rhtml         |    3 +-
+ app/views/personas/new.html.erb             |    2 +-
+ app/views/uejecutoras/index.html.erb        |   10 +
+ app/views/uejecutoras/new.html.erb          |   14 +-
+ config/routes.rb                            |   18 +-
+ public/index.html                           |  274 ---------------------------
+ public/stylesheets/costumbre.css            |    4 +
+ 16 files changed, 56 insertions(+), 295 deletions(-)
+ delete mode 100644 public/index.html
+ create mode 100644 public/stylesheets/costumbre.css
+
+diff --git a/app/controllers/accounts_controller.rb b/app/controllers/accounts_controller.rb
+index f76445f..3aa0f3d 100644
+--- a/app/controllers/accounts_controller.rb
++++ b/app/controllers/accounts_controller.rb
+@@ -1,7 +1,7 @@
+ class AccountsController < ApplicationController
+   layout 'application'
+   def show
+-    @account = Account.find params[:id]
++    @account = Account.find(params[:id])
+   end
+ 
+   def transfer
+diff --git a/app/controllers/departamentos_controller.rb b/app/controllers/departamentos_controller.rb
+index 4cd9dd9..764589e 100644
+--- a/app/controllers/departamentos_controller.rb
++++ b/app/controllers/departamentos_controller.rb
+@@ -26,6 +26,8 @@ class DepartamentosController < ApplicationController
+   def new
+     @departamento = Departamento.new
+ 
++    flash[:back] = request.referer
++
+     respond_to do |format|
+       format.html # new.html.erb
+       format.xml  { render :xml => @departamento }
+@@ -45,7 +47,7 @@ class DepartamentosController < ApplicationController
+     respond_to do |format|
+       if @departamento.save
+         flash[:notice] = 'Departamento was successfully created.'
+-        format.html { redirect_to(@departamento) }
++        format.html { redirect_to(flash[:back] || @departamento) }
+         format.xml  { render :xml => @departamento, :status => :created, :location => @departamento }
+       else
+         format.html { render :action => "new" }
+diff --git a/app/controllers/personas_controller.rb b/app/controllers/personas_controller.rb
+index 8e6850f..6752260 100644
+--- a/app/controllers/personas_controller.rb
++++ b/app/controllers/personas_controller.rb
+@@ -26,6 +26,8 @@ class PersonasController < ApplicationController
+   def new
+     @persona = Persona.new
+ 
++    flash[:back] = request.referer
++
+     respond_to do |format|
+       format.html # new.html.erb
+       format.xml  { render :xml => @persona }
+@@ -45,7 +47,7 @@ class PersonasController < ApplicationController
+     respond_to do |format|
+       if @persona.save
+         flash[:notice] = 'Persona was successfully created.'
+-        format.html { redirect_to(@persona) }
++        format.html { redirect_to(flash[:back] || @persona) }
+         format.xml  { render :xml => @persona, :status => :created, :location => @persona }
+       else
+         format.html { render :action => "new" }
+diff --git a/app/controllers/uejecutoras_controller.rb b/app/controllers/uejecutoras_controller.rb
+index ecf1d77..190e1fe 100644
+--- a/app/controllers/uejecutoras_controller.rb
++++ b/app/controllers/uejecutoras_controller.rb
+@@ -2,7 +2,7 @@ class UejecutorasController < ApplicationController
+   # GET /uejecutoras
+   # GET /uejecutoras.xml
+   def index
+-    @uejecutoras = Uejecutora.find(:all)
++    @uejecutoras = Uejecutora.all
+ 
+     respond_to do |format|
+       format.html # index.html.erb
+diff --git a/app/models/account.rb b/app/models/account.rb
+index 88c8912..1ce929f 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -37,6 +37,10 @@ class Account < ActiveRecord::Base
+     @base
+   end
+ 
++  def to_s
++    "#{self.code} #{self.name}"
++  end
++
+ 
+   # total_crub
+   #
+diff --git a/app/models/departamento.rb b/app/models/departamento.rb
+index 966b229..599badb 100644
+--- a/app/models/departamento.rb
++++ b/app/models/departamento.rb
+@@ -1,2 +1,5 @@
+ class Departamento < ActiveRecord::Base
++  def to_s
++    self.nombre
++  end
+ end
+diff --git a/app/models/persona.rb b/app/models/persona.rb
+index 4ab88af..26b7fd7 100644
+--- a/app/models/persona.rb
++++ b/app/models/persona.rb
+@@ -1,2 +1,5 @@
+ class Persona < ActiveRecord::Base
++  def to_s
++    "#{self.apellido}, #{self.name}"
++  end
+ end
+diff --git a/app/views/accounts/index.html.erb b/app/views/accounts/index.html.erb
+index ebb4bd3..77d4c19 100644
+--- a/app/views/accounts/index.html.erb
++++ b/app/views/accounts/index.html.erb
+@@ -21,7 +21,7 @@
+ 	<% for account in @accounts %>
+ 
+ 		<tr class="<%= cycle('even', 'odd') %>">
+-      <td><%= link_to "#{account.code} &nbsp;#{account.name}", account_path(account) %></td> 
++      <td><%= link_to account, account_path(account) %></td> 
+ 	
+ 			<td><span class="green"><%=  account.balance %>$</span></td>
+ 			<td> <%= link_to 'Destroy', account_path(account), :confirm => 'Are you sure?', :method => :delete %></td> 
+diff --git a/app/views/departamentos/new.html.erb b/app/views/departamentos/new.html.erb
+index 587b148..6a2a080 100644
+--- a/app/views/departamentos/new.html.erb
++++ b/app/views/departamentos/new.html.erb
+@@ -12,4 +12,4 @@
+   </p>
+ <% end %>
+ 
+-<%= link_to 'Back', departamentos_path %>
++<%= link_to 'Back', flash[:back] || departamentos_path %>
+diff --git a/app/views/layouts/application.rhtml b/app/views/layouts/application.rhtml
+index c04db54..522a9ed 100644
+--- a/app/views/layouts/application.rhtml
++++ b/app/views/layouts/application.rhtml
+@@ -5,7 +5,8 @@
+ 	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+ 	<title>UNCO- online</title>
+ 	<%= stylesheet_link_tag 'eltema' %>
+-	<%= stylesheet_link_tag 'menu' %>
++	<%= stylesheet_link_tag 'menus' %>
++	<%= stylesheet_link_tag 'costumbre' %>
+ 	
+ 	
+     <%= javascript_include_tag :defaults %>
+diff --git a/app/views/personas/new.html.erb b/app/views/personas/new.html.erb
+index f825656..fccad3d 100644
+--- a/app/views/personas/new.html.erb
++++ b/app/views/personas/new.html.erb
+@@ -32,4 +32,4 @@
+   </p>
+ <% end %>
+ 
+-<%= link_to 'Back', personas_path %>
++<%= link_to 'Back', flash[:back] || personas_path %>
+diff --git a/app/views/uejecutoras/index.html.erb b/app/views/uejecutoras/index.html.erb
+index 537e8c7..06796cd 100644
+--- a/app/views/uejecutoras/index.html.erb
++++ b/app/views/uejecutoras/index.html.erb
+@@ -19,6 +19,16 @@
+     <th>Departamento</th>
+   </tr>
+ 
++  <% @uejecutoras.each do |u| %>
++    <tr>
++      <td><%=h u.name %></td>
++      <td><%=h u.account %></td>
++      <td><%=h u.descripcion %></td>
++      <td><%=h u.persona %></td>
++      <td><%=h u.departamento %></td>
++    </tr>
++  <% end %>
++
+ 
+ </table>
+ 
+diff --git a/app/views/uejecutoras/new.html.erb b/app/views/uejecutoras/new.html.erb
+index e4b3278..fce028d 100644
+--- a/app/views/uejecutoras/new.html.erb
++++ b/app/views/uejecutoras/new.html.erb
+@@ -8,20 +8,22 @@
+     <%= f.text_field :name %>
+   </p>
+   <p>
+-    <%= f.label :account %><br />
+-    <%= f.text_field :account %>
++    <%= f.label :account_id %><br />
++    <%= f.collection_select :account_id, Account.all( :order => :code ), :id, :to_s %>
+   </p>
+   <p>
+     <%= f.label :descripcion %><br />
+     <%= f.text_area :descripcion %>
+   </p>
+   <p>
+-    <%= f.label :persona %><br />
+-    <%= f.text_field :persona %>
++    <%= f.label :persona_id %><br />
++    <%= f.collection_select :persona_id, Persona.all( :order => :apellido ), :id, :to_s %>
++    <%= link_to "Nuevo", new_persona_path, :class => "nuevo" %>
+   </p>
+   <p>
+-    <%= f.label :departamento %><br />
+-    <%= f.text_field :departamento %>
++    <%= f.label :departamento_id %><br />
++    <%= f.collection_select :departamento_id, Departamento.all( :order => :nombre ), :id, :nombre %>
++    <%= link_to "Nuevo", new_departamento_path, :class => "nuevo" %>
+   </p>
+   <p>
+     <%= f.submit "Create" %>
+diff --git a/config/routes.rb b/config/routes.rb
+index 988b937..3bd9630 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -3,14 +3,18 @@ ActionController::Routing::Routes.draw do |map|
+   map.resources :departamentos
+   map.resources :uejecutoras
+ 
+-map.root :controller => "account"
+- map.resources :accounts, :member => { :new_transfer => :get,  :new_transaction => :get, :transfer => :get , :base => :get }
+- map.accounts 'accounts', :controller =>'accounts', :action=>'new_transaction'
+- 
+- 
+- #Pra  usar 127.0.0.1:3000/new_transactions
++  map.root :controller => "accounts"
++  map.resources :accounts, :member => {
++    :new_transfer => :get,
++    :new_transaction => :get,
++    :transfer => :get,
++    :base => :get
++  }
++
++
++  #Pra  usar 127.0.0.1:3000/new_transactions
+   #map.transactions 'transactions', :controller => 'accounts', :action => 'new_transaction'
+- 
++
+ 
+   map.connect ':controller/:action/:id'
+   map.connect ':controller/:action/:id.:format'
+diff --git a/public/index.html b/public/index.html
+deleted file mode 100644
+index e84c359..0000000
+--- a/public/index.html
++++ /dev/null
+@@ -1,274 +0,0 @@
+-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+-<html>
+-  <head>
+-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+-    <title>Ruby on Rails: Welcome aboard</title>
+-    <style type="text/css" media="screen">
+-      body {
+-        margin: 0;
+-        margin-bottom: 25px;
+-        padding: 0;
+-        background-color: #f0f0f0;
+-        font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+-        font-size: 13px;
+-        color: #333;
+-      }
+-      
+-      h1 {
+-        font-size: 28px;
+-        color: #000;
+-      }
+-      
+-      a  {color: #03c}
+-      a:hover {
+-        background-color: #03c;
+-        color: white;
+-        text-decoration: none;
+-      }
+-      
+-      
+-      #page {
+-        background-color: #f0f0f0;
+-        width: 750px;
+-        margin: 0;
+-        margin-left: auto;
+-        margin-right: auto;
+-      }
+-      
+-      #content {
+-        float: left;
+-        background-color: white;
+-        border: 3px solid #aaa;
+-        border-top: none;
+-        padding: 25px;
+-        width: 500px;
+-      }
+-      
+-      #sidebar {
+-        float: right;
+-        width: 175px;
+-      }
+-
+-      #footer {
+-        clear: both;
+-      }
+-      
+-
+-      #header, #about, #getting-started {
+-        padding-left: 75px;
+-        padding-right: 30px;
+-      }
+-
+-
+-      #header {
+-        background-image: url("images/rails.png");
+-        background-repeat: no-repeat;
+-        background-position: top left;
+-        height: 64px;
+-      }
+-      #header h1, #header h2 {margin: 0}
+-      #header h2 {
+-        color: #888;
+-        font-weight: normal;
+-        font-size: 16px;
+-      }
+-      
+-      
+-      #about h3 {
+-        margin: 0;
+-        margin-bottom: 10px;
+-        font-size: 14px;
+-      }
+-      
+-      #about-content {
+-        background-color: #ffd;
+-        border: 1px solid #fc0;
+-        margin-left: -11px;
+-      }
+-      #about-content table {
+-        margin-top: 10px;
+-        margin-bottom: 10px;
+-        font-size: 11px;
+-        border-collapse: collapse;
+-      }
+-      #about-content td {
+-        padding: 10px;
+-        padding-top: 3px;
+-        padding-bottom: 3px;
+-      }
+-      #about-content td.name  {color: #555}
+-      #about-content td.value {color: #000}
+-      
+-      #about-content.failure {
+-        background-color: #fcc;
+-        border: 1px solid #f00;
+-      }
+-      #about-content.failure p {
+-        margin: 0;
+-        padding: 10px;
+-      }
+-      
+-      
+-      #getting-started {
+-        border-top: 1px solid #ccc;
+-        margin-top: 25px;
+-        padding-top: 15px;
+-      }
+-      #getting-started h1 {
+-        margin: 0;
+-        font-size: 20px;
+-      }
+-      #getting-started h2 {
+-        margin: 0;
+-        font-size: 14px;
+-        font-weight: normal;
+-        color: #333;
+-        margin-bottom: 25px;
+-      }
+-      #getting-started ol {
+-        margin-left: 0;
+-        padding-left: 0;
+-      }
+-      #getting-started li {
+-        font-size: 18px;
+-        color: #888;
+-        margin-bottom: 25px;
+-      }
+-      #getting-started li h2 {
+-        margin: 0;
+-        font-weight: normal;
+-        font-size: 18px;
+-        color: #333;
+-      }
+-      #getting-started li p {
+-        color: #555;
+-        font-size: 13px;
+-      }
+-      
+-      
+-      #search {
+-        margin: 0;
+-        padding-top: 10px;
+-        padding-bottom: 10px;
+-        font-size: 11px;
+-      }
+-      #search input {
+-        font-size: 11px;
+-        margin: 2px;
+-      }
+-      #search-text {width: 170px}
+-      
+-      
+-      #sidebar ul {
+-        margin-left: 0;
+-        padding-left: 0;
+-      }
+-      #sidebar ul h3 {
+-        margin-top: 25px;
+-        font-size: 16px;
+-        padding-bottom: 10px;
+-        border-bottom: 1px solid #ccc;
+-      }
+-      #sidebar li {
+-        list-style-type: none;
+-      }
+-      #sidebar ul.links li {
+-        margin-bottom: 5px;
+-      }
+-      
+-    </style>
+-    <script type="text/javascript" src="javascripts/prototype.js"></script>
+-    <script type="text/javascript" src="javascripts/effects.js"></script>
+-    <script type="text/javascript">
+-      function about() {
+-        if (Element.empty('about-content')) {
+-          new Ajax.Updater('about-content', 'rails/info/properties', {
+-            method:     'get',
+-            onFailure:  function() {Element.classNames('about-content').add('failure')},
+-            onComplete: function() {new Effect.BlindDown('about-content', {duration: 0.25})}
+-          });
+-        } else {
+-          new Effect[Element.visible('about-content') ? 
+-            'BlindUp' : 'BlindDown']('about-content', {duration: 0.25});
+-        }
+-      }
+-      
+-      window.onload = function() {
+-        $('search-text').value = '';
+-        $('search').onsubmit = function() {
+-          $('search-text').value = 'site:rubyonrails.org ' + $F('search-text');
+-        }
+-      }
+-    </script>
+-  </head>
+-  <body>
+-    <div id="page">
+-      <div id="sidebar">
+-        <ul id="sidebar-items">
+-          <li>
+-            <form id="search" action="http://www.google.com/search" method="get">
+-              <input type="hidden" name="hl" value="en" />
+-              <input type="text" id="search-text" name="q" value="site:rubyonrails.org " />
+-              <input type="submit" value="Search" /> the Rails site
+-            </form>
+-          </li>
+-        
+-          <li>
+-            <h3>Join the community</h3>
+-            <ul class="links">
+-              <li><a href="http://www.rubyonrails.org/">Ruby on Rails</a></li>
+-              <li><a href="http://weblog.rubyonrails.org/">Official weblog</a></li>
+-              <li><a href="http://wiki.rubyonrails.org/">Wiki</a></li>
+-            </ul>
+-          </li>
+-          
+-          <li>
+-            <h3>Browse the documentation</h3>
+-            <ul class="links">
+-              <li><a href="http://api.rubyonrails.org/">Rails API</a></li>
+-              <li><a href="http://stdlib.rubyonrails.org/">Ruby standard library</a></li>
+-              <li><a href="http://corelib.rubyonrails.org/">Ruby core</a></li>
+-            </ul>
+-          </li>
+-        </ul>
+-      </div>
+-
+-      <div id="content">
+-        <div id="header">
+-          <h1>Welcome aboard</h1>
+-          <h2>You&rsquo;re riding Ruby on Rails!</h2>
+-        </div>
+-
+-        <div id="about">
+-          <h3><a href="rails/info/properties" onclick="about(); return false">About your application&rsquo;s environment</a></h3>
+-          <div id="about-content" style="display: none"></div>
+-        </div>
+-        
+-        <div id="getting-started">
+-          <h1>Getting started</h1>
+-          <h2>Here&rsquo;s how to get rolling:</h2>
+-          
+-          <ol>          
+-            <li>
+-              <h2>Use <tt>script/generate</tt> to create your models and controllers</h2>
+-              <p>To see all available options, run it without parameters.</p>
+-            </li>
+-            
+-            <li>
+-              <h2>Set up a default route and remove or rename this file</h2>
+-              <p>Routes are set up in config/routes.rb.</p>
+-            </li>
+-
+-            <li>
+-              <h2>Create your database</h2>
+-              <p>Run <tt>rake db:migrate</tt> to create your database. If you're not using SQLite (the default), edit <tt>config/database.yml</tt> with your username and password.</p>
+-            </li>
+-          </ol>
+-        </div>
+-      </div>
+-      
+-      <div id="footer">&nbsp;</div>
+-    </div>
+-  </body>
+-</html>
+\ No newline at end of file
+diff --git a/public/stylesheets/costumbre.css b/public/stylesheets/costumbre.css
+new file mode 100644
+index 0000000..3e784cc
+--- /dev/null
++++ b/public/stylesheets/costumbre.css
+@@ -0,0 +1,4 @@
++a.nuevo {
++  font-size: smaller;
++  color: red;
++}
+-- 
+1.6.1
+
+
+From ae2a9e4d92ba4e15979380a40addfdaa5e85ef9f Mon Sep 17 00:00:00 2001
+From: Jason King <jk@silentcow.com>
+Date: Wed, 4 Mar 2009 23:12:32 +1100
+Subject: [PATCH 2/2] Restructured transactions as nested route
+
+---
+ app/controllers/accounts_controller.rb             |   37 ++------
+ app/controllers/transactions_controller.rb         |   93 ++++++++++++++++++++
+ app/helpers/transactions_helper.rb                 |    2 +
+ app/models/account.rb                              |   49 ++++-------
+ app/models/transaction.rb                          |   51 +++++++----
+ app/models/unit_transaction.rb                     |    3 -
+ app/views/accounts/index.html.erb                  |    2 +-
+ app/views/accounts/new_transaction.html.erb        |   69 +++++++--------
+ app/views/accounts/show.html.erb                   |   21 -----
+ app/views/transactions/_form.html.erb              |   26 ++++++
+ app/views/transactions/edit.html.erb               |   11 +++
+ app/views/transactions/index.html.erb              |   43 +++++++++
+ app/views/transactions/new.html.erb                |   11 +++
+ config/routes.rb                                   |    8 +--
+ db/migrate/20090219134958_create_accounts.rb       |    2 +
+ db/migrate/20090219135021_create_transactions.rb   |    8 ++
+ .../20090219135127_create_unit_transactions.rb     |   16 ----
+ db/schema.rb                                       |   25 +++---
+ test/functional/transactions_controller_test.rb    |   45 ++++++++++
+ 19 files changed, 351 insertions(+), 171 deletions(-)
+ create mode 100644 app/controllers/transactions_controller.rb
+ create mode 100644 app/helpers/transactions_helper.rb
+ delete mode 100644 app/views/accounts/show.html.erb
+ create mode 100644 app/views/transactions/_form.html.erb
+ create mode 100644 app/views/transactions/edit.html.erb
+ create mode 100644 app/views/transactions/index.html.erb
+ create mode 100644 app/views/transactions/new.html.erb
+ delete mode 100644 db/migrate/20090219135127_create_unit_transactions.rb
+ create mode 100644 test/functional/transactions_controller_test.rb
+
+diff --git a/app/controllers/accounts_controller.rb b/app/controllers/accounts_controller.rb
+index 3aa0f3d..7fe0f06 100644
+--- a/app/controllers/accounts_controller.rb
++++ b/app/controllers/accounts_controller.rb
+@@ -1,20 +1,9 @@
+ class AccountsController < ApplicationController
+   layout 'application'
++
+   def show
+     @account = Account.find(params[:id])
+-  end
+-
+-  def transfer
+-    t = Transaction.new
+-    u = t.unit_transactions.build(
+-      :from => params[:current_account],
+-      :to => params[:account_to_transfer],
+-      :value => params[:value_to_transfer])
+-    t.save
+-    
+-     #@account.balance = Account.balance -:value
+-     #@account.save
+-    
++    redirect_to( account_transactions_path(@account))
+   end
+ 
+   def index
+@@ -25,34 +14,27 @@ class AccountsController < ApplicationController
+     @all_accounts = Account.find(:all, :order => "name")
+   end
+ 
+-  def new_transaction
+-      @transaction = Transaction.new
+-      #3.times{@transaction.unit_transactions.build}
+-     1.times{@transaction.unit_transactions.build}
+-  end
+-
+-
+   def new
+     @account = Account.new
+   end
+-  
+-  
++
++
+   def create
+     @account = Account.new(params[:account])
+-    
++
+     respond_to do |format|
+       if @account.save
+         flash[:notice] = 'account was successfully.'        
+         format.html { redirect_to accounts_url }
+-      #format.html { redirect_to account_path(@account) }
++        #format.html { redirect_to account_path(@account) }
+         format.js
+       else
+         format.html { render :action => "new" }
+       end
+     end
+   end
+-  
+-  
++
++
+   # DELETE /projects/1
+   # DELETE /projects/1.xml
+   def destroy
+@@ -64,5 +46,4 @@ class AccountsController < ApplicationController
+       format.xml  { head :ok }
+     end
+   end
+-  
+-    end
++end
+diff --git a/app/controllers/transactions_controller.rb b/app/controllers/transactions_controller.rb
+new file mode 100644
+index 0000000..314db3b
+--- /dev/null
++++ b/app/controllers/transactions_controller.rb
+@@ -0,0 +1,93 @@
++class TransactionsController < ApplicationController
++  layout 'application'
++  before_filter :get_account
++
++  # GET /transactions
++  # GET /transactions.xml
++  def index
++    @transactions = @account.history
++
++    respond_to do |format|
++      format.html # index.html.erb
++      format.xml  { render :xml => @transactions }
++    end
++  end
++
++  # GET /transactions/1
++  # GET /transactions/1.xml
++  def show
++    @transaction = Transaction.find(params[:id])
++
++    respond_to do |format|
++      format.xml  { render :xml => @transaction }
++    end
++  end
++
++  # GET /transactions/new
++  # GET /transactions/new.xml
++  def new
++    @transaction = Transaction.new
++    @transaction.from = @account
++
++    respond_to do |format|
++      format.html # new.html.erb
++      format.xml  { render :xml => @transaction }
++    end
++  end
++
++  # GET /transactions/1/edit
++  def edit
++    @transaction = Transaction.find(params[:id])
++  end
++
++  # POST /transactions
++  # POST /transactions.xml
++  def create
++    @transaction = Transaction.new(params[:transaction])
++
++    respond_to do |format|
++      if @transaction.save
++        flash[:notice] = 'Transaction was successfully created.'
++        format.html { redirect_to(account_transactions_path(@account)) }
++        format.xml  { render :xml => @transaction, :status => :created, :location => @transaction }
++      else
++        format.html { render :action => "new" }
++        format.xml  { render :xml => @transaction.errors, :status => :unprocessable_entity }
++      end
++    end
++  end
++
++  # PUT /transactions/1
++  # PUT /transactions/1.xml
++  def update
++    @transaction = Transaction.find(params[:id])
++
++    respond_to do |format|
++      if @transaction.update_attributes(params[:transaction])
++        flash[:notice] = 'Transaction was successfully updated.'
++        format.html { redirect_to(account_transactions_path(@account)) }
++        format.xml  { head :ok }
++      else
++        format.html { render :action => "edit" }
++        format.xml  { render :xml => @transaction.errors, :status => :unprocessable_entity }
++      end
++    end
++  end
++
++  # DELETE /transactions/1
++  # DELETE /transactions/1.xml
++  def destroy
++    @transaction = Transaction.find(params[:id])
++    @transaction.destroy
++
++    respond_to do |format|
++      format.html { redirect_to(account_transactions_path(@account)) }
++      format.xml  { head :ok }
++    end
++  end
++
++  private
++  def get_account
++    @account = Account.find(params[:account_id])
++  end
++end
+diff --git a/app/helpers/transactions_helper.rb b/app/helpers/transactions_helper.rb
+new file mode 100644
+index 0000000..36098d1
+--- /dev/null
++++ b/app/helpers/transactions_helper.rb
+@@ -0,0 +1,2 @@
++module TransactionsHelper
++end
+diff --git a/app/models/account.rb b/app/models/account.rb
+index 1ce929f..60f2133 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -1,10 +1,12 @@
+ class Account < ActiveRecord::Base
++  named_scope :tops, :conditions => 'parent_id IS NULL', :order => :code
++
+   belongs_to :parent, :class_name => 'Account'
+   has_many :children, :class_name => 'Account', :foreign_key => :parent_id, :dependent => :destroy, :order => :code
+ 
+-  named_scope :tops, :conditions => 'parent_id IS NULL', :order => :code
++  has_many :from_transactions, :class_name => 'Transaction', :foreign_key => :from_id
++  has_many :to_transactions  , :class_name => 'Transaction', :foreign_key => :to_id
+ 
+-  has_many :unit_transactions
+   validates_presence_of :name
+   validates_uniqueness_of :name
+ 
+@@ -18,46 +20,31 @@ class Account < ActiveRecord::Base
+   @@per_page = 2
+ 
+   def history(since = 7.days.ago)
+-    UnitTransaction.find(:all,
++    Transaction.find(:all,
+                          :conditions => ['from_id = ? OR to_id = ? AND created_at > ?', self.id, self.id, since],
+                          :order => 'created_at DESC')
+   end     
+ 
+-  ##Calculos  
+-
+-  def ingresos 
+-  end
+-
+-  def egresos
+-  end
+-
+-  def base
+-    @base ||= unit_transactions.inject(0) {|total, il| total += il.total}
+-    @base = 0.0 if @base.nil?
+-    @base
+-  end
+-
+   def to_s
+     "#{self.code} #{self.name}"
+   end
+ 
+-
+-  # total_crub
+-  #
+-  def total_crub
+-    base * (crub / 100.0)
++  def increase(p)
++    self.balance += p[:value].to_f
++    self.balance_crub += p[:value_crub].to_f
++    self.balance_nqn += p[:value_nqn].to_f
+   end
+ 
+-  # nqn
+-  #
+-  def total_nqn
+-    base * (nqn / 100.0)
+-  end
++  def decrease(p)
++    unless self.balance >= p[:value].to_f &&
++      self.balance_crub >= p[:value_crub].to_f &&
++      self.balance_nqn >= p[:value_nqn].to_f
++      raise "Not enough balance"
++    end
+ 
+-  # total
+-  #
+-  def total 
+-    base - total_crub + total_nqn
++    self.balance -= p[:value].to_f
++    self.balance_crub -= p[:value_crub].to_f
++    self.balance_nqn -= p[:value_nqn].to_f
+   end
+ 
+   def level
+diff --git a/app/models/transaction.rb b/app/models/transaction.rb
+index 30b5b2e..a1b9c5c 100644
+--- a/app/models/transaction.rb
++++ b/app/models/transaction.rb
+@@ -1,23 +1,40 @@
+ class Transaction < ActiveRecord::Base
+-# id
+-  has_many :unit_transactions
+-  after_save :do_transaction
+-  #after_create :do_transaction
+-  
+-  def  unit_transaction_attributes=(unit_transaction_attributes)
+-     unit_attributres. each do |attributes|
+-     unit_transaction.build(attributes)
++  belongs_to :from, :class_name => 'Account'
++  belongs_to :to  , :class_name => 'Account'
++
++  attr_accessor :total
++  attr_accessor :value_nqn_pc
++  attr_accessor :value_crub_pc
++
++  before_save :calculate_values
++  after_save :adjust_balances
++
++  def after_initialize
++    if self.new_record?
++      self.total ||= 0
++      self.value_nqn_pc ||= 10
++      self.value_crub_pc ||= 10
+     end
+   end
+ 
+-  def do_transaction
+-    self.transaction do # method transaction from ActiveRecord (for DB)
+-      self.unit_transactions.each do |t|
+-        t.from.balance -= t.value 
+-        t.to.balance += t.value
+-        t.from.save
+-        t.to.save
+-      end
+-    end
++  def after_find
++    self.total = self.value_nqn + self.value_crub + self.value
++    self.value_nqn_pc =  100.0 * ( self.value_nqn / self.total )
++    self.value_crub_pc = 100.0 * ( self.value_crub / self.total )
++  end
++
++  private
++  def adjust_balances
++    self.from.decrease( :value => self.value, :value_crub => self.value_crub, :value_nqn => self.value_nqn )
++    self.from.save!
++    self.to.increase( :value => self.value, :value_crub => self.value_crub, :value_nqn => self.value_nqn )
++    self.to.save!
++  end
++
++  def calculate_values
++    self.total = self.total.to_f
++    self.value_crub = self.total * ( self.value_crub_pc.to_f / 100.0 )
++    self.value_nqn  = self.total * ( self.value_nqn_pc.to_f  / 100.0 )
++    self.value = self.total - self.value_crub - self.value_nqn
+   end
+ end
+diff --git a/app/models/unit_transaction.rb b/app/models/unit_transaction.rb
+index 51df689..ec3b12b 100644
+--- a/app/models/unit_transaction.rb
++++ b/app/models/unit_transaction.rb
+@@ -1,8 +1,5 @@
+ class UnitTransaction < ActiveRecord::Base
+-# id, from_id, to_id, transaction_id, value
+   belongs_to :from, :class_name => "Account"
+-  #belongs_to :account, :foreign_key => :from
+-  
+   belongs_to :to, :class_name => "Account"
+   belongs_to :transaction
+ end
+diff --git a/app/views/accounts/index.html.erb b/app/views/accounts/index.html.erb
+index 77d4c19..2b01a56 100644
+--- a/app/views/accounts/index.html.erb
++++ b/app/views/accounts/index.html.erb
+@@ -23,7 +23,7 @@
+ 		<tr class="<%= cycle('even', 'odd') %>">
+       <td><%= link_to account, account_path(account) %></td> 
+ 	
+-			<td><span class="green"><%=  account.balance %>$</span></td>
++			<td><span class="green"><%=  number_to_currency(account.balance) %></span></td>
+ 			<td> <%= link_to 'Destroy', account_path(account), :confirm => 'Are you sure?', :method => :delete %></td> 
+ 		</tr>
+ 		<% end %>
+diff --git a/app/views/accounts/new_transaction.html.erb b/app/views/accounts/new_transaction.html.erb
+index 1f91d71..4edac8c 100644
+--- a/app/views/accounts/new_transaction.html.erb
++++ b/app/views/accounts/new_transaction.html.erb
+@@ -1,38 +1,37 @@
+ <span class="left"><h2>New transaction</h2></spam>
+ 
+ 
+-<%#= form_for(@transaction) do |f| %>
+-<% form_for @transaction, :url => { :controller => "accounts", :action => "transfer" } do |f| %>
+-
+-  <%= f.error_messages %>
+-
+-
+-
+-<% for unit_transaction in @transaction.unit_transactions %>
+-  <% fields_for "transaction[ for unit_transaction_attributes][]...", unit_transaction do |utransaction_form| %>
+-  
+- 
+-  <p>
+-    <%= f.label :from_id %><br />
+-    <%= select("accounts", "account_id", Account.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true }) %>
+-  </p>
+-
+-  <p>
+-    <%= f.label :to_id %><br />
+-    <%= select("accounts", "account_id", Account.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true }) %>
+-  </p>
+-
+-  <p>
+-      Value <%= utransaction_form.text_field :value  %><br />
+-
+-  </p>
+- 
+-  <p>
+-    <%#= date %>
+-  </p>
+-   <% end %>
+-  <% end %>
+-  <p>
+-    <%= f.submit "Create" , :or=> link_to ('Back', accounts_path) %>
+-  </p>
+-<% end %>
++    <% form_for( @account, @transaction ) do |f| %>
++
++      <%= f.error_messages %>
++
++
++
++      <% for unit_transaction in @transaction.unit_transactions %>
++        <% fields_for "transaction[ for unit_transaction_attributes][]...", unit_transaction do |utransaction_form| %>
++
++
++          <p>
++          <%= f.label :from_id %><br />
++          <%= select("accounts", "account_id", Account.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true }) %>
++          </p>
++
++          <p>
++          <%= f.label :to_id %><br />
++          <%= select("accounts", "account_id", Account.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true }) %>
++          </p>
++
++          <p>
++          Value <%= utransaction_form.text_field :value  %><br />
++
++          </p>
++
++          <p>
++          <%#= date %>
++          </p>
++        <% end %>
++      <% end %>
++      <p>
++      <%= f.submit "Create" , :or=> link_to ('Back', accounts_path) %>
++      </p>
++    <% end %>
+diff --git a/app/views/accounts/show.html.erb b/app/views/accounts/show.html.erb
+deleted file mode 100644
+index e86546c..0000000
+--- a/app/views/accounts/show.html.erb
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<span class="right"><%= link_to 'New transaction', new_transaction_account_path %></span>
+-<h1>Accounts | show</h1>
+- 
+-<table>
+-   <tr>
+-     <th>Type</th>
+-     <th>Value</th>
+-     <th>Date</th>
+-   </tr>
+-   <% @account.history.each do |t| %>
+-   <tr>
+-     <td><%=  t.to == @account ? 'C' : 'D' %></td>
+-      
+-     <td><%=h t.value %></td>
+-     <td> <%=h t.created_at.to_s(:short) %><br /><span class="grey"><%= distance_of_time_in_words_to_now t.created_at %></td>
+-    
+-
+-   </tr>
+-   <% end %>
+-   
+- </table>
+diff --git a/app/views/transactions/_form.html.erb b/app/views/transactions/_form.html.erb
+new file mode 100644
+index 0000000..17ff98c
+--- /dev/null
++++ b/app/views/transactions/_form.html.erb
+@@ -0,0 +1,26 @@
++  <%= f.error_messages %>
++
++  <p>
++    <%= f.label :from_id %>
++    <%= f.collection_select :from_id, Account.all( :order => :code ), :id, :to_s %>
++  </p>
++
++  <p>
++    <%= f.label :to_id %>
++    <%= f.collection_select :to_id, Account.all( :order => :code ), :id, :to_s %>
++  </p>
++
++  <p>
++    <%= f.label :total %>
++    <%= f.text_field :total %>
++  </p>
++
++  <p>
++    CRUB percentage
++    <%= f.text_field :value_crub_pc %> %
++  </p>
++
++  <p>
++    NQN percentage
++    <%= f.text_field :value_nqn_pc %> %
++  </p>
+diff --git a/app/views/transactions/edit.html.erb b/app/views/transactions/edit.html.erb
+new file mode 100644
+index 0000000..309440e
+--- /dev/null
++++ b/app/views/transactions/edit.html.erb
+@@ -0,0 +1,11 @@
++<h1>Editing transaction</h1>
++
++<% form_for([@account,@transaction]) do |f| %>
++  <%= render :partial => 'form', :locals => { :f => f } %>
++
++  <p>
++    <%= f.submit "Update" %>
++  </p>
++<% end %>
++
++<%= link_to 'Back', account_transactions_path(@account) %>
+diff --git a/app/views/transactions/index.html.erb b/app/views/transactions/index.html.erb
+new file mode 100644
+index 0000000..1fcbd8b
+--- /dev/null
++++ b/app/views/transactions/index.html.erb
+@@ -0,0 +1,43 @@
++<h1>Listing transactions</h1>
++
++<table>
++  <tr>
++    <th>From Account</th>
++    <th>To Account</th>
++    <th>Value</th>
++    <th>CRUB</th>
++    <th>NQN</th>
++  </tr>
++
++<% for t in @transactions %>
++  <tr>
++    <td><%= link_to h(t.from), account_path(t.from) %></td>
++    <td><%= link_to h(t.to)  , account_path(t.to)   %></td>
++    <td><%=number_to_currency t.value %></td>
++    <td><%=number_to_currency t.value_crub %></td>
++    <td><%=number_to_currency t.value_nqn %></td>
++    <td><%= link_to 'Edit', edit_account_transaction_path(@account,t) %></td>
++    <td><%= link_to 'Destroy', account_transaction_path(@account,t), :confirm => 'Are you sure?', :method => :delete %></td>
++  </tr>
++<% end %>
++</table>
++
++<br />
++
++<%= link_to 'New transaction', new_account_transaction_path(@account) %>
++
++<br/>
++<br/>
++
++<table>
++  <tr>
++    <th>Balance</th>
++    <th>CRUB Balance</th>
++    <th>NQN Balance</th>
++  </tr>
++  <tr>
++    <td><%= number_to_currency(@account.balance) %></td>
++    <td><%= number_to_currency(@account.balance_crub) %></td>
++    <td><%= number_to_currency(@account.balance_nqn) %></td>
++  </tr>
++</table>
+diff --git a/app/views/transactions/new.html.erb b/app/views/transactions/new.html.erb
+new file mode 100644
+index 0000000..9a19bea
+--- /dev/null
++++ b/app/views/transactions/new.html.erb
+@@ -0,0 +1,11 @@
++<h1>New transaction</h1>
++
++<% form_for([@account,@transaction]) do |f| %>
++  <%= render :partial => 'form', :locals => { :f => f } %>
++
++  <p>
++    <%= f.submit "Create" %>
++  </p>
++<% end %>
++
++<%= link_to 'Back', account_transactions_path(@account) %>
+diff --git a/config/routes.rb b/config/routes.rb
+index 3bd9630..0d089f1 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -4,13 +4,7 @@ ActionController::Routing::Routes.draw do |map|
+   map.resources :uejecutoras
+ 
+   map.root :controller => "accounts"
+-  map.resources :accounts, :member => {
+-    :new_transfer => :get,
+-    :new_transaction => :get,
+-    :transfer => :get,
+-    :base => :get
+-  }
+-
++  map.resources :accounts, :has_many => :transactions
+ 
+   #Pra  usar 127.0.0.1:3000/new_transactions
+   #map.transactions 'transactions', :controller => 'accounts', :action => 'new_transaction'
+diff --git a/db/migrate/20090219134958_create_accounts.rb b/db/migrate/20090219134958_create_accounts.rb
+index 4eea59c..3850cef 100644
+--- a/db/migrate/20090219134958_create_accounts.rb
++++ b/db/migrate/20090219134958_create_accounts.rb
+@@ -3,6 +3,8 @@ class CreateAccounts < ActiveRecord::Migration
+     create_table :accounts do |t|
+       t.string :name
+       t.decimal :balance, :precision => 8, :scale => 2, :default => 0
++      t.decimal :balance_crub, :precision => 8, :scale => 2, :default => 0
++      t.decimal :balance_nqn, :precision => 8, :scale => 2, :default => 0
+       t.integer :parent_id
+       t.string :code, :null => false
+ 
+diff --git a/db/migrate/20090219135021_create_transactions.rb b/db/migrate/20090219135021_create_transactions.rb
+index 57179e1..1748c5d 100644
+--- a/db/migrate/20090219135021_create_transactions.rb
++++ b/db/migrate/20090219135021_create_transactions.rb
+@@ -1,9 +1,17 @@
+ class CreateTransactions < ActiveRecord::Migration
+   def self.up
+     create_table :transactions do |t|
++      t.integer :from_id
++      t.integer :to_id
++      t.decimal :value, :precision => 8, :scale => 2, :default => 0
++      t.decimal :value_crub, :precision => 8, :scale => 2, :default => 0
++      t.decimal :value_nqn, :precision => 8, :scale => 2, :default => 0
+ 
+       t.timestamps
+     end
++
++    add_index :transactions, :from_id
++    add_index :transactions, :to_id
+   end
+ 
+   def self.down
+diff --git a/db/migrate/20090219135127_create_unit_transactions.rb b/db/migrate/20090219135127_create_unit_transactions.rb
+deleted file mode 100644
+index 939fc5e..0000000
+--- a/db/migrate/20090219135127_create_unit_transactions.rb
++++ /dev/null
+@@ -1,16 +0,0 @@
+-class CreateUnitTransactions < ActiveRecord::Migration
+-  def self.up
+-    create_table :unit_transactions do |t|
+-      t.integer :from_id
+-      t.integer :to_id
+-      t.integer :transaction_id
+-      t.decimal :value, :precision => 8, :scale => 2, :default => 0
+-
+-      t.timestamps
+-    end
+-  end
+-
+-  def self.down
+-    drop_table :unit_transactions
+-  end
+-end
+diff --git a/db/schema.rb b/db/schema.rb
+index ad2419f..cb4e741 100644
+--- a/db/schema.rb
++++ b/db/schema.rb
+@@ -9,13 +9,15 @@
+ #
+ # It's strongly recommended to check this file into your version control system.
+ 
+-ActiveRecord::Schema.define(:version => 20090226110242) do
++ActiveRecord::Schema.define(:version => 20090304020429) do
+ 
+   create_table "accounts", :force => true do |t|
+     t.string   "name"
+-    t.decimal  "balance",    :precision => 8, :scale => 2, :default => 0.0
++    t.decimal  "balance",      :precision => 8, :scale => 2, :default => 0.0
++    t.decimal  "balance_crub", :precision => 8, :scale => 2, :default => 0.0
++    t.decimal  "balance_nqn",  :precision => 8, :scale => 2, :default => 0.0
+     t.integer  "parent_id"
+-    t.string   "code",                                                      :null => false
++    t.string   "code",                                                        :null => false
+     t.datetime "created_at"
+     t.datetime "updated_at"
+   end
+@@ -41,10 +43,18 @@ ActiveRecord::Schema.define(:version => 20090226110242) do
+   end
+ 
+   create_table "transactions", :force => true do |t|
++    t.integer  "from_id"
++    t.integer  "to_id"
++    t.decimal  "value",      :precision => 8, :scale => 2, :default => 0.0
++    t.decimal  "value_crub", :precision => 8, :scale => 2, :default => 0.0
++    t.decimal  "value_nqn",  :precision => 8, :scale => 2, :default => 0.0
+     t.datetime "created_at"
+     t.datetime "updated_at"
+   end
+ 
++  add_index "transactions", ["from_id"], :name => "index_transactions_on_from_id"
++  add_index "transactions", ["to_id"], :name => "index_transactions_on_to_id"
++
+   create_table "uejecutoras", :force => true do |t|
+     t.string   "name"
+     t.integer  "account_id"
+@@ -55,13 +65,4 @@ ActiveRecord::Schema.define(:version => 20090226110242) do
+     t.datetime "updated_at"
+   end
+ 
+-  create_table "unit_transactions", :force => true do |t|
+-    t.integer  "from_id"
+-    t.integer  "to_id"
+-    t.integer  "transaction_id"
+-    t.decimal  "value",          :precision => 8, :scale => 2, :default => 0.0
+-    t.datetime "created_at"
+-    t.datetime "updated_at"
+-  end
+-
+ end
+diff --git a/test/functional/transactions_controller_test.rb b/test/functional/transactions_controller_test.rb
+new file mode 100644
+index 0000000..2b3360a
+--- /dev/null
++++ b/test/functional/transactions_controller_test.rb
+@@ -0,0 +1,45 @@
++require 'test_helper'
++
++class TransactionsControllerTest < ActionController::TestCase
++  test "should get index" do
++    get :index
++    assert_response :success
++    assert_not_nil assigns(:transactions)
++  end
++
++  test "should get new" do
++    get :new
++    assert_response :success
++  end
++
++  test "should create transaction" do
++    assert_difference('Transaction.count') do
++      post :create, :transaction => { }
++    end
++
++    assert_redirected_to transaction_path(assigns(:transaction))
++  end
++
++  test "should show transaction" do
++    get :show, :id => transactions(:one).id
++    assert_response :success
++  end
++
++  test "should get edit" do
++    get :edit, :id => transactions(:one).id
++    assert_response :success
++  end
++
++  test "should update transaction" do
++    put :update, :id => transactions(:one).id, :transaction => { }
++    assert_redirected_to transaction_path(assigns(:transaction))
++  end
++
++  test "should destroy transaction" do
++    assert_difference('Transaction.count', -1) do
++      delete :destroy, :id => transactions(:one).id
++    end
++
++    assert_redirected_to transactions_path
++  end
++end
+-- 
+1.6.1
+

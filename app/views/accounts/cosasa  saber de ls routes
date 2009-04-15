@@ -1,0 +1,242 @@
+(12:45:52) El tema de #ruby-es es: Bienvenid@(s)  a #Ruby-es |  http://www.ruby-lang.org/es/  |  Codigos aqui,--> http://pastie.caboo.se | screencasts: http://railscasts.com/ | http://gettingreal.37signals.com/GR_esp.php
+(12:49:59) Joelito [n=joel@201.160.167.25.cable.dyn.cableonline.com.mx] ha entrado en la sala.
+(12:53:51) dummies_freelanc: Joelito:  como estas que te trae por aqu?
+(12:55:18) Joelito: pues, ando configurando mi xchat con los canales *-es que frecuento :)
+(12:57:01) dummies_freelanc: ok.
+(12:57:16) dummies_freelanc: xchat dsuele tener problemas con freenode
+(12:59:18) Joelito: en linux no he tenido problemas :)
+(13:06:08) dummies_freelanc: yo si en lenny sid de debian
+(13:06:23) dummies_freelanc: ahora estoy con pidgin
+(13:07:25) Joelito: oh, usas debian...yo también...pero ahora uso debian 5.0 (lenny estable)
+(13:21:36) Joelito ha salido de la sala (quit: "Saliendo").
+(13:34:53) krawek [n=krawek@nelug/developer/krawek] ha entrado en la sala.
+(13:40:50) kuadrosx [n=kuadrosx@190.68.203.75] ha entrado en la sala.
+(13:48:49) dummies_freelanc: krawek:  necesito que me indiques el error en esta app. que estoy haciendo..  te hago un pastie ? ote paso el code en tar.bz2?
+(13:49:09) krawek: estoy ocupado dummies_freelanc
+(13:49:11) krawek: hola
+(13:51:01) dummies_freelanc: hola
+(13:51:06) dummies_freelanc: ok.
+(13:51:25) dummies_freelanc: seguire buscando.
+(14:03:52) kw0lf [n=kw0lf@200.90.124.54] ha entrado en la sala.
+(14:26:36) x1nux [n=x1nux@unaffiliated/x1nux] ha entrado en la sala.
+(14:26:55) x1nux: saludos ..
+(14:27:02) dummies_freelanc: hola x1nux
+(14:27:05) krawek: hi
+(14:27:07) kw0lf: hu
+(14:27:10) kw0lf: hi
+(14:27:16) kw0lf: que tal
+(14:27:18) x1nux: aloja
+(14:27:20) x1nux: :P
+(14:27:20) x1nux: jeje
+(14:27:38) dummies_freelanc: jajaja 
+(14:28:02) x1nux: que como vamos
+(14:28:17) ***x1nux haciendo mantenimientos de pC e instalando windows colosus .. 
+(14:28:31) ***x1nux para salas de internet en peque?os pueblos ..
+(14:28:54) dummies_freelanc: pues el che solia decir que la revolucion debia financiarce de alguna manera.
+(14:29:03) x1nux: juas
+(14:29:04) x1nux: sip
+(14:32:22) x1nux ha salido de la sala (quit: "Saliendo").
+(14:32:29) krawek: por eso surgio la narco-guerrilla?
+(14:32:54) kw0lf: krawek: pitiyankee
+(14:33:01) dummies_freelanc: mmm krawek no l ose.! tal vez
+(14:33:07) kw0lf: la narco guerrilla tiene la culpa el gobierno
+(14:33:23) dummies_freelanc: es del gobierno.
+(14:33:24) dummies_freelanc: :)
+(14:33:24) krawek: pitiyankee es un nuevo grupo de raggaethon?
+(14:33:40) kw0lf: si no fijate lo qeu pasa ahora en afganistan
+(14:33:52) kw0lf: habian errqadicado el opio y la heroina
+(14:33:55) dummies_freelanc: en unos de mis trabajos..
+(14:34:01) dummies_freelanc: de freelance.
+(14:34:03) kw0lf: antes de la guerra contra el "terrorismo"
+(14:34:11) kw0lf: ahora
+(14:34:32) dummies_freelanc: bueno aporten..
+(14:34:35) kw0lf: vuelve afganistan a ser el monoproductor de opio y heroina mas grande del mundo 99% del opio y heroina del mundo sale de ahi
+(14:35:03) dummies_freelanc: porque ya puse on line   a www.guerrillaprogramera.com.ar
+(14:35:29) kw0lf: jajaja
+(14:35:56) kw0lf: lol
+(14:36:01) kw0lf: it workds
+(14:36:04) dummies_freelanc: la idea  es la  revolucionar
+(14:36:04) kw0lf: works
+(14:36:15) kw0lf: dummies_freelanc asi parece
+(14:36:22) dummies_freelanc: la grafica tiena iconos revolucioanrios como el che . ghandi
+(14:36:29) dummies_freelanc:  newton einstein
+(14:36:43) dummies_freelanc: desde la programacion y mas en ruby.
+(14:36:46) kw0lf: ahh con mephisto
+(14:36:48) kw0lf: :D
+(14:37:04) kw0lf: yo voy a poner mi blog esta semana de nuevo online
+(14:37:10) dummies_freelanc: dale.
+(14:37:10) kw0lf: estaba cmabiandole un poco
+(14:37:17) krawek: el gobierno... no estoy seguro, la gente cultiva porque da mucho dinero
+(14:37:21) kw0lf: por ahoira no hay nada en mi o pagina :(
+(14:37:28) kw0lf: http://kw0lf.org
+(14:37:56) dummies_freelanc: bueno..
+(14:38:11) kw0lf: aunque hay un escrito mio de la juventud
+(14:38:16) dummies_freelanc:  la amtanza en bs as. .es como los latinos par ael EEUU en las eleccione ssin ellos es imposible ganr..
+(14:38:18) kw0lf: hara 10 años que escribi eso
+(14:38:19) kw0lf: jajaja
+(14:38:23) dummies_freelanc: aca conozco dealers.
+(14:38:33) dummies_freelanc: y nuestra actual presidenta antes fue..
+(14:38:40) dummies_freelanc:  directora del grupo antinarco.
+(14:38:56) dummies_freelanc: que casualidad .. entrro mas efredrina que en mexico
+(14:38:58) kw0lf: krawek: el dnero es del gob
+(14:39:01) kw0lf:  y el gob
+(14:39:05) kw0lf: es quien pacta con otros gob
+(14:39:13) kw0lf: para satisfacer necesidades
+(14:39:16) kw0lf: de otras naciones
+(14:39:26) kw0lf: viste la pelicula " Blow " ?
+(14:39:31) dummies_freelanc: vos estabas dao con opio en ese momento no? en el de escribir..
+(14:39:32) krawek: no
+(14:39:33) kw0lf: del tipo que fue el primero que llevo la coca a usa ?
+(14:39:47) kw0lf: como salen las conexiones de escobar y otros politicos
+(14:39:57) kw0lf: dummies_freelanc:  loool
+(14:39:58) kw0lf: no
+(14:40:05) kw0lf: pero es parte de la paranoia mundial
+(14:40:17) kw0lf: asi es el mundo actualmente
+(14:40:27) dummies_freelanc: bueno yo trabaje con el gobuierno krawek algo te conte.. 
+(14:40:38) dummies_freelanc: fueron mis mejores años$$$
+(14:40:41) kw0lf: dummies_freelanc:  yo trabaqje con el gobierno de italia
+(14:40:44) dummies_freelanc: y mis peores años :(
+(14:40:53) kw0lf: y el de vzla con la GN en el servicio de Telecomunicacions
+(14:40:59) dummies_freelanc: tube ataques de panico me persiguieron .
+(14:41:05) kw0lf: y coño las cosas qeu uno tiene que ver
+(14:41:11) kw0lf: dummies_freelanc:  jajajajaja
+(14:41:16) kw0lf: a mi me amenazaron :S
+(14:41:31) kw0lf: y sin poder hacer nada
+(14:41:36) kw0lf: me tenian trabajando como spammer
+(14:41:41) dummies_freelanc:  bueno viste creen que uno porque tiene conocimiento.. les puede hacer daño entonces ellos se muetran mas terroristas que uno.
+(14:41:42) kw0lf: como cualquier mierda me ponian
+(14:41:49) kw0lf: si
+(14:41:50) kw0lf: es asi
+(14:42:03) dummies_freelanc: y por mas que sean clientes.. ellos siempre son jefes
+(14:43:06) kw0lf: si pero seran jefes
+(14:43:11) kw0lf:  la cosa es cuando llegas al punto
+(14:43:15) kw0lf: de que te amenzan
+(14:43:18) kw0lf: ahi ya no es un jefe
+(14:43:27) kw0lf: es un hdp
+(14:44:06) kw0lf: al menos yo jamas he tenido mala intencio en las cosas que hacia , pero uno como que sucumbe ante estas cosas que le imponen no ?
+(14:44:17) dummies_freelanc: sip
+(14:44:18) kw0lf: terminas siendo malo realmente
+(14:44:26) kw0lf: entonces te rompes a ti mismo
+(14:44:30) kw0lf: coño que haces ????
+(14:44:44) dummies_freelanc: existee el termino de forro o condon o preservativo y es la manera en que usa la gente del gobierno.
+(14:45:03) dummies_freelanc: al los de nuestro gremio.
+(14:45:22) kw0lf: asi es cuando manejas informacion
+(14:45:28) kw0lf: y es algo fraudulento
+(14:45:32) kw0lf: entoinces te desaparecen
+(14:45:36) dummies_freelanc: me canse de tener reuniones de   decirle usame .. pero no me forrees
+(14:46:05) kw0lf: :/ a mi me ponian a parir , lo unico que sabian hacer era decir , los billetes dentro de tu boca
+(14:46:08) kw0lf: y no hablas
+(14:46:10) kw0lf:  haces
+(14:46:11) dummies_freelanc:  ami  hace unos años me clavaron con  15.00 dolares.
+(14:46:13) kw0lf: malditos italianos mafiosos
+(14:46:20) dummies_freelanc: 15.000
+(14:46:25) dummies_freelanc: y dije..
+(14:46:38) dummies_freelanc: me voy sin los 15.000 pero vivo porque a estos n ole simporta un muerto mas.
+(14:46:49) dummies_freelanc: bueno welcome a guerrilla programera.
+(14:46:51) kw0lf: francamente no
+(14:46:52) dummies_freelanc: ;)
+(14:47:05) kw0lf: dummies_freelanc: cuando lo tengas habilitado 100%
+(14:47:09) kw0lf: me haces una cuenta
+(14:47:13) dummies_freelanc: ok.
+(14:47:16) kw0lf: colaboro contigo
+(14:47:34) dummies_freelanc: el dummies.
+(14:47:45) kw0lf: eso sono dominicano
+(14:47:45) dummies_freelanc: en mi nick es por los muñecos crash thes dummies. 
+(14:47:48) dummies_freelanc: para chocques.
+(14:47:59) dummies_freelanc: sobrevivi a varias ya.
+(14:48:08) kw0lf: si
+(14:48:15) kw0lf: los dummies
+(14:48:33) dummies_freelanc: por eso el dummies.. un muchacho de  la lista me dijo  disculpame .. nporque te haces llamr ideot. ?? freelance y le dije  no.
+(14:48:34) kw0lf: es una buena analogia
+(14:48:52) dummies_freelanc: es por sobrevivir.
+(14:49:20) dummies_freelanc: si n otubiera hijos seria otra historia.
+(14:49:24) kw0lf: si bueno pero un dummy puede ser visto como un ser sin vida propia , que solo sirve para tonterias o pruebas
+(14:49:47) kw0lf: lo beuno es qeu tu lo ves como la persona que aguanta de todo ....
+(14:50:02) dummies_freelanc: si le doy vidsa1
+(14:50:59) dummies_freelanc: y que como freelance hizo de todo.
+(14:51:16) dummies_freelanc: incluso un Enterprise resources planning 
+(14:51:23) dummies_freelanc: apra empresas constructoras
+(14:51:26) dummies_freelanc:  :)
+(14:51:35) dummies_freelanc: hace años conmn gtk
+(14:52:46) dummies_freelanc: para gestionar materiales  colcoados en las viviendas
+(14:54:05) kw0lf: hhh
+(14:55:36) dummies_freelanc: eso me consultaste..
+(14:55:55) dummies_freelanc: y l oque necesites conta con todo el codgio
+(14:55:58) dummies_freelanc: code
+(14:57:25) kw0lf: ahh vake
+(14:57:26) kw0lf: vale
+(14:57:29) kw0lf: esta funcional ?
+(14:58:19) kw0lf: aqui en vzla eso se puede comerciar , aqui solo usan uno llamado lulo y es unico y exclusivo para win
+(14:58:25) kw0lf: y se vende como pan caliente
+(14:58:36) kw0lf: mas aun por el alza de obras de construccion que se vive aqui
+(14:59:19) dummies_freelanc: no l otoco hace muchoooooy  esta en algun cd por ahi..
+(14:59:28) dummies_freelanc: dejame buscarllo yveo que hay.
+(14:59:54) kw0lf: vale
+(14:59:58) kw0lf: dale con calma
+(15:04:18) kuadrosx: kw0lf: creo que en la unica parte donde el dinero es del gob es en .ve xD
+(15:10:49) dummies_freelanc: jajajaja
+(15:11:00) dummies_freelanc: kuadrosx:  ;)
+(15:15:55) kw0lf: kuadrosx: si no fuera asi , ya estariamos en quiebra
+(15:16:23) kw0lf ha salido de la sala.
+(15:16:28) kw0lf [n=kw0lf@200.90.124.54] ha entrado en la sala.
+(15:21:36) dummies_freelanc: en guerrilal programera quiero que la revolucion sea  un proyecto que es implementar  ruby en microcontoladores.
+(15:21:47) dummies_freelanc: pasra poder entrar ala rama d eelctronica
+(15:22:08) dummies_freelanc: que conocen de esto de la mix entre ruby y los microcontroladores ..
+(15:29:50) kw0lf: yo npi
+(15:51:53) kuadrosx ha salido de la sala (quit: lem.freenode.net irc.freenode.net).
+(15:51:56) ChanServ ha salido de la sala (quit: lem.freenode.net irc.freenode.net).
+(15:51:56) kw0lf ha salido de la sala (quit: lem.freenode.net irc.freenode.net).
+(15:51:56) krawek ha salido de la sala (quit: lem.freenode.net irc.freenode.net).
+(15:54:05) ChanServ [ChanServ@services.] ha entrado en la sala.
+(15:54:05) kw0lf [n=kw0lf@200.90.124.54] ha entrado en la sala.
+(15:54:05) kuadrosx [n=kuadrosx@190.68.203.75] ha entrado en la sala.
+(15:54:05) krawek [n=krawek@nelug/developer/krawek] ha entrado en la sala.
+(15:54:05) modo (+o ChanServ ) por irc.freenode.net
+(16:01:12) krawek: http://rad.rubyforge.org/ < robot para preparar bebidas ocntrolado con ruby || http://github.com/mwilliams/barduino/tree/master
+(16:03:53) dummies_freelanc: arduino..
+(16:03:54) dummies_freelanc:  sip
+(16:04:06) dummies_freelanc:  yo ya mande pedir 
+(16:04:37) dummies_freelanc: el circuito porque aun n ome da los conocimientos para aarmarlo yo
+(16:12:17) silvercat [n=silverca@193.Red-88-9-210.dynamicIP.rima-tde.net] ha entrado en la sala.
+(16:26:47) dummies_freelanc: como puedo mostrar la salida de rake routes de manera ordenada y mas comprensible?
+(16:30:35) kuadrosx ha salido de la sala (quit: Read error: 113 (No route to host)).
+(16:32:26) kuadrosx [n=kuadrosx@190.68.203.75] ha entrado en la sala.
+(17:07:42) dummies_freelanc: como comento el rhtml con <%=begin%> <%=end%>
+(17:07:49) dummies_freelanc: ??
+(17:08:07) dummies_freelanc: en rails 2.2.
+(17:21:10) dummies_freelanc: listo con <%#
+(18:31:06) dummies_freelanc: mephisto n ome carga los themas  para probarlo
+(18:31:10) dummies_freelanc:  se queda en loading
+(18:31:14) dummies_freelanc: que sucede?
+(19:50:28) kw0lf ha salido de la sala (quit: "Lost terminal").
+(20:02:05) dummies_freelanc: http://www.aipchile.cl/camara/location.php?locationID=34&cameraID=116
+(20:02:17) dummies_freelanc: de nuevo tengo el volcan en erupcion.!
+(20:02:23) dummies_freelanc: :(
+(20:22:43) Torrieri [n=Torrieri@nelug/crew/torrieri] ha entrado en la sala.
+(20:37:30) dummies_freelanc: tengo un modelo account con name  y balance como campos.. deseo sumar  todos los campos balance que es un decimal..y mostrar el total de todas las account
+(20:37:41) dummies_freelanc: y.. 
+(20:42:31) dummies_freelanc: deberia crear un metodo en el modelo .. por ejemplo llamado  base..
+(20:42:56) dummies_freelanc: @base=0.0
+(20:43:13) dummies_freelanc: para llamrlo luego con account.base
+(20:43:17) dummies_freelanc: mm 
+(20:54:20) dummies_freelanc: como identifico.. la ruta correcta copn rake routes?
+(20:54:51) dummies_freelanc: undefined method `show_account_path' for #<ActionView::Base:0xb67453a4>  .
+(20:57:02) krawek: rake routes | grep account
+(20:57:11) krawek: no es show
+(20:57:17) krawek: es account_path(account)
+(20:57:21) krawek: o solo pasale el objeto
+(20:57:39) krawek: link_to 'show', account
+(20:57:44) krawek: link_to 'show', la cuenta
+(20:57:49) dummies_freelanc: n <td><% link_to account.name, show_account_path(account) %></td>  
+(20:57:56) krawek: o
+(20:58:08) krawek: link_to account.name, account_path(account)
+(20:58:09) krawek: o
+(20:58:12) krawek: link_to account.name, account
+(20:58:15) krawek: debe funcionar
+(20:58:18) dummies_freelanc: ok
+(20:59:26) dummies_freelanc: yo no cree la s cosas con scaffold 
+(20:59:39) dummies_freelanc: y n ose si cada metodo debo agregarl oal routes.rb
+(20:59:59) dummies_freelanc: o es a cada callbacks 
+(21:00:12) dummies_freelanc: map.resources :accounts, :member => { :new_transfer => :get, :transfer => :get , :base => :get}
+(21:00:24) dummies_freelanc: deberia agregar show aqui. 
+(21:00:25) dummies_freelanc: ??

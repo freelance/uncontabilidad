@@ -1,0 +1,17 @@
+<span class="left"><h1 id="accounts_count"> | Nueva transaccion</h1>
+<h2> <td><span class="green">General   </span></td></h2>
+
+<div><%= flash[:error] %></div>
+
+<% if flash[:error].present?  %><h3 class="flash error"><%=h flash[:error]  %></h3><% end -%>
+<% if flash[:notice].present? %><h3 class="flash notice"><%=h flash[:notice] %></h3><% end -%>
+
+<% form_for([@account,@transaction]) do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+
+  <p>
+    <%= f.submit "Crear" %>
+  </p>
+<% end %>
+
+<%= link_to 'Atras', account_transactions_path(@account) %>

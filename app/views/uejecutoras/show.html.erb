@@ -1,0 +1,33 @@
+<span class="left"><h1 id="accounts_count">Mostrando Unidad Ejecutora</h1>
+<h2> <td><span class="green">General   </span></td></h2>
+<%= link_to 'Editar', edit_uejecutora_path(@uejecutora) %> |
+<%= link_to 'Atras', uejecutoras_path %></span></span>
+<h3 class="flash"><%= flash[:notice] %></h3>
+
+<p>
+  <b>Nombre:</b>
+  <%=h @uejecutora.name %>
+</p>
+
+<p>
+  <b>Cuenta:</b>
+  <%=h @uejecutora.account %>
+</p>
+
+<p>
+  <b>Descripcion:</b>
+  <%=h @uejecutora.descripcion %>
+</p>
+
+<p>
+  <b>Persona:</b>
+  <%=h @uejecutora.persona %>
+</p>
+
+<p>
+  <b>Departamento:</b>
+  <%=h @uejecutora.departamento %>
+</p>
+
+
+

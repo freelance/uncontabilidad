@@ -1,0 +1,252 @@
+  div#buttonA {
+      position: relative;
+      margin-left: 50px;
+      float: left;
+  }
+  div#buttonA ul {
+      margin: 0px;
+      padding: 0px;
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      font-size: 1.2em;
+      line-height: 30px;
+  }
+  div#buttonA li {
+      list-style-type: none;
+      height: 120px;
+      width: 200px;
+      margin: 20px;
+      text-align:center;
+  }
+  div#buttonA li a {
+      height: 100%;
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      border-width: 6px;
+  }
+  div#buttonA li a:link {
+      color: #000000;
+      font-weight: bold;
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonA li a:visited {
+      color: #000000;
+      font-weight: bold;
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonA li a:hover {
+      font-weight: bold;
+      color: #FFFFFF;
+      background-color: #999999;
+      border-style: outset;
+  }
+  div#buttonA li a:active {
+      font-weight: bold;
+      color: #FFFFFF;
+      background-color: #666666;
+      border-style: inset;
+  }
+
+  div#buttonA li a.clas_pen:link {
+      color: white;
+      font-weight: bold;
+      background-color: rgb(192,0,0);
+      border-style: outset;
+  }
+
+  div#buttonA li a.clas_pen:visited {
+      color: white;
+      font-weight: bold;
+      background-color: rgb(192,0,0);
+      border-style: outset;
+  }
+  div#buttonA li a.clas_pen:hover {
+      color: #FFFFFF;
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+  div#buttonA li a.clas_pen:active {
+      color: #FFFFFF;
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: inset;
+  }
+  div#buttonA li a.clas_dis:link {
+      color: rgb(150,150,150);
+      font-weight: bold;
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonA li a.clas_dis:visited {
+      color: rgb(150,150,150);
+      font-weight: bold;
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonA li a.clas_dis:hover {
+      font-weight: bold;
+      color: rgb(150,150,150);
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonA li a.clas_dis:active {
+      font-weight: bold;
+      color: rgb(150,150,150);
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonA li a.clas_pen_dis:link {
+      color: rgb(231,231,231);
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+
+  div#buttonA li a.clas_pen_dis:visited {
+      color: rgb(231,231,231);
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+  div#buttonA li a.clas_pen_dis:hover {
+      color: rgb(231,231,231);
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+  div#buttonA li a.clas_pen_dis:active {
+      color: rgb(231,231,231);
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+
+
+  div#buttonB {
+      position: relative;
+      margin-left: 50px;
+      float: left;
+  }
+  div#buttonB ul {
+      margin: 0px;
+      padding: 0px;
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      font-size: 1.2em;
+      line-height: 30px;
+  }
+  div#buttonB li {
+      list-style-type: none;
+      height: 120px;
+      width: 200px;
+      margin: 20px;
+      text-align:center;
+  }
+  div#buttonB li a {
+      height: 100%;
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      border-width: 6px;
+  }
+  div#buttonB li a:link {
+      color: #000000;
+      font-weight: bold;
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonB li a:visited {
+      color: #000000;
+      font-weight: bold;
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonB li a:hover {
+      font-weight: bold;
+      color: #FFFFFF;
+      background-color: #999999;
+      border-style: outset;
+  }
+  div#buttonB li a:active {
+      font-weight: bold;
+      color: #FFFFFF;
+      background-color: #666666;
+      border-style: inset;
+  }
+
+  div#buttonB li a.clas_pen:link {
+      color: white;
+      font-weight: bold;
+      background-color: rgb(192,0,0);
+      border-style: outset;
+  }
+
+  div#buttonB li a.clas_pen:visited {
+      color: white;
+      font-weight: bold;
+      background-color: rgb(192,0,0);
+      border-style: outset;
+  }
+  div#buttonB li a.clas_pen:hover {
+      color: #FFFFFF;
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+  div#buttonB li a.clas_pen:active {
+      color: #FFFFFF;
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: inset;
+  }
+  div#buttonB li a.clas_dis:link {
+      color: rgb(150,150,150);
+      font-weight: bold;
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonB li a.clas_dis:visited {
+      color: rgb(150,150,150);
+      font-weight: bold;
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonB li a.clas_dis:hover {
+      font-weight: bold;
+      color: rgb(150,150,150);
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonB li a.clas_dis:active {
+      font-weight: bold;
+      color: rgb(150,150,150);
+      background-color: #CCCCCC;
+      border-style: outset;
+  }
+  div#buttonB li a.clas_pen_dis:link {
+      color: rgb(231,231,231);
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+
+  div#buttonB li a.clas_pen_dis:visited {
+      color: rgb(231,231,231);
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+  div#buttonB li a.clas_pen_dis:hover {
+      color: rgb(231,231,231);
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }
+  div#buttonB li a.clas_pen_dis:active {
+      color: rgb(231,231,231);
+      font-weight: bold;
+      background-color: rgb(255,102,51);
+      border-style: outset;
+  }

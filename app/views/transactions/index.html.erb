@@ -1,0 +1,58 @@
+<span class="left"><h1 id="accounts_count"><%= 'Transacciones(%s)' % @transactions.size %> | Listando transacciones</h1>
+<h2> <td><span class="green"><%= @account.name %>  </span></td></h2>
+<%=  link_to 'Nueva transaccion', new_account_transaction_path(@account)  %></span></span>
+<h3 class="flash"><%= flash[:notice] %></h3>
+
+<br/>
+
+
+<table class="list">
+  <tr>
+    <th>Balance</th>
+    <th>CRUB Balance</th>
+    <th>NQN Balance</th>
+    <th>Total</th>
+  </tr>
+  <tr class="currency">
+    <td><%= number_to_currency(@account.balance) %></td>
+    <td><%= number_to_currency(@account.balance_crub) %></td>
+    <td><%= number_to_currency(@account.balance_nqn) %></td>
+    <td><%= number_to_currency(@account.total) %></td>
+  </tr>
+</table>
+
+
+<br/>
+
+<table class="list">
+  <tr>
+    <th>D. Tipo</th>
+    <th>Numero</th>
+    <th>Desde Cuenta</th>
+    <th>Hacia  Cuenta</th>
+    <th>Valor</th>
+    <th>CRUB</th>
+    <th>NQN</th>
+  </tr>
+
+<% for t in @transactions %>
+  <tr>
+  
+    <td><%= h (t.doctipo) %></td>
+    <td><%= h (t.numero) %></td>
+ 
+    <td><%= link_to h(t.from), account_path(t.from) %></td>
+    <td><%= link_to h(t.to)  , account_path(t.to)   %></td>
+    <td class="currency"><%=number_to_currency t.value %></td>
+    <td class="currency"><%=number_to_currency t.value_crub %></td>
+    <td class="currency"><%=number_to_currency t.value_nqn %></td>
+    <td><%= link_to 'Edit', edit_account_transaction_path(@account,t) %></td>
+    <td><%= link_to 'Destroy', account_transaction_path(@account,t), :confirm => 'Estas seguro?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%#=%>
+

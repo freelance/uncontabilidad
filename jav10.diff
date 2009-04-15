@@ -1,0 +1,25 @@
+From c150a7a79bcf3edf9608d5f1f22c1b9fcc4678ca Mon Sep 17 00:00:00 2001
+From: javier barcena <javierbuilder@gmail.com>
+Date: Fri, 6 Mar 2009 23:05:10 +1100
+Subject: [PATCH] Showing all the account detail
+
+---
+ app/views/accounts/new.html.erb |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/app/views/accounts/new.html.erb b/app/views/accounts/new.html.erb
+index 575ffe6..9b15e10 100644
+--- a/app/views/accounts/new.html.erb
++++ b/app/views/accounts/new.html.erb
+@@ -9,7 +9,7 @@
+ 
+   <p>
+     <%= f.label :parent_id %><br />
+-    <%= f.collection_select :parent_id, Account.all(:order => :code), :id, :code, :include_blank => true %>
++    <%= f.collection_select :parent_id, Account.all(:order => :code), :id, :to_s, :include_blank => true %>
+   </p>
+   <p>
+     <%= f.label :Nombre %><br />
+-- 
+1.6.1
+

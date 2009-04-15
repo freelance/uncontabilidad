@@ -1,0 +1,41 @@
+<%#= debug @accounts %>
+<%#= debug @Transactions %>
+<%#= debug @UnitTransactions %>
+<%#= javascript_include_tag "accounts" %>
+
+
+<span class="left"><h1 id="accounts_count"><%= 'Cuentas (%s)' % @accounts.size %> | Listado</h1>
+<h2> <td><span class="green">Balance Total   $<%= Account.sum(:balance) %></td></h2>
+
+<%= link_to 'Nueva cuenta', new_account_path %></span>
+<%= flash[:notice] %>
+
+ <span class="left"><table class="list">
+	<thead>
+		<tr>
+		    <th >Cuenta</th>
+		    <th >Balance Actual</th>
+		    <th > Editar </th>
+		    <th > Eliminar </th>
+		</tr>
+	</thead>
+	<tbody>
+	<% for account in @accounts %>
+
+		<tr class="<%= cycle('even', 'odd') %>">
+      <td><%= link_to account, account_path(account) %></td> 
+	
+			<td><span class="green"><%=  number_to_currency(account.balance) %></span></td>
+			
+			<td><%= link_to image_tag("/images/b_edit.png"), edit_account_path(account) %></td>
+	       <td><%#= link_to image_tag("/images/b_drop.png"), account_path(account), :confirm => 'Estas seguro?', :method => :delete %></td>
+	       <td> <%= link_to 'Destruir', account_path(account), :confirm => 'Estas seguro?', :method => :delete %></td> 
+						
+		</tr>
+		<% end %>
+	</tbody>
+</table></span>
+
+<%#= will_paginate @accounts, :inner_window => 2, :outer_window => 2 %>
+
+<%#= image_tag("graphs/my_account_graph.png") %>

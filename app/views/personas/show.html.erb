@@ -1,0 +1,33 @@
+<p>
+  <b>Name:</b>
+  <%=h @persona.name %>
+</p>
+
+<p>
+  <b>Apellido:</b>
+  <%=h @persona.apellido %>
+</p>
+
+<p>
+  <b>Direccion:</b>
+  <%=h @persona.direccion %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @persona.email %>
+</p>
+
+<p>
+  <b>Telefono:</b>
+  <%=h @persona.telefono %>
+</p>
+
+<p>
+  <b>Identificacion:</b>
+  <%=h @persona.identificacion %>
+</p>
+
+
+<%= link_to 'Edit', edit_persona_path(@persona) %> |
+<%= link_to 'Back', personas_path %>

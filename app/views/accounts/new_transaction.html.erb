@@ -1,0 +1,37 @@
+<span class="left"><h2>Nueva transaccion</h2></spam>
+
+
+    <% form_for( @account, @transaction ) do |f| %>
+
+      <%= f.error_messages %>
+
+
+
+      <% for unit_transaction in @transaction.unit_transactions %>
+        <% fields_for "transaction[ for unit_transaction_attributes][]...", unit_transaction do |utransaction_form| %>
+
+
+          <p>
+          <%= f.label :from_id %><br />
+          <%= select("accounts", "account_id", Account.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true }) %>
+          </p>
+
+          <p>
+          <%= f.label :to_id %><br />
+          <%= select("accounts", "account_id", Account.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true }) %>
+          </p>
+
+          <p>
+          Value <%= utransaction_form.text_field :value  %><br />
+
+          </p>
+
+          <p>
+          <%#= date %>
+          </p>
+        <% end %>
+      <% end %>
+      <p>
+      <%= f.submit "Create" , :or=> link_to ('Back', accounts_path) %>
+      </p>
+    <% end %>

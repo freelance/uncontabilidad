@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>UNCO- online</title>
+	<%= stylesheet_link_tag 'eltema' %>
+	<%= stylesheet_link_tag 'style' %>
+	<%= stylesheet_link_tag 'dropdown.linear' %>
+    <%= javascript_include_tag :defaults %>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+<div id="top-menu">
+    <div id="account">
+	    
+        <ul><li class='last'>
+			<% if logged_in? %>
+			 		 		Hola!! <%= current_user.login %><br />
+  	 	<% end %>
+		</li></ul>
+    
+    
+    <ul><li class='last'><%= link_to 'Cerrar sesion', '/logout' %></li>
+    </ul></div>
+</div>
+      
+<div id="header">
+    
+ <ul id="nav" class="dropdown dropdown-linear">
+       
+	<li>Cuentas | </span>
+		<ul>
+			<li><a href="./">XXXX</a></li>
+			<li><a href="./">YYYY</a></li>
+			<li><a href="./">ZZZZ</a></li>
+			
+		</ul>
+	</li>
+	<li> Unidades Ejecutoras | </span>
+		<ul>
+			<li><a href="./">UUUU	</a></li>
+			</ul>
+	</li>
+	</ul>
+             
+        
+        
+  </div>
+
+<div class="" id="main">
+
+    <div id="sidebar">        
+        
+  <h3>Reportes</h3>
+<%= link_to 'Reportes', accounts_path %>
+
+<h3>Estadisticas</h3>
+<p><%= link_to 'Line Chart ', accounts_path %></p>
+</div>
+   
+   <div id="content">
+				
+       
+     <%= yield  %>
+    
+    </div>
+  
+</body>
+</html>

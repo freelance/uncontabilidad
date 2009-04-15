@@ -1,0 +1,132 @@
+Datos Auxiliares:
+- Administracion
+- comprobantes
+- ""
+- Comprobantes:
+  - Administracion
+  - comprobantes
+  - ""
+  Cuentas:
+  - Administracion
+  - cuentas
+  - ""
+  Facturas:
+  - Administracion
+  - facturas
+  - ""
+  Formas de Pago:
+  - Administracion
+  - forma_pagos
+  - ""
+  Saldos:
+  - Administracion
+  - saldos
+  - ""
+  Tipos de Documentos Contables:
+  - Administracion
+  - tipo_contadocumentos
+  - ""
+  Tipos de Documentos auxiliares:
+  - Administracion
+  - tipo_doc_aux
+  - ""
+Productos:
+- Administracion
+- productos
+- ""
+- Productos:
+  - Administracion
+  - productos
+  - ""
+  Tipos de Productos:
+  - Administracion
+  - tipos_productos
+  - ""
+Terceros:
+- Administracion
+- terceros
+- ""
+- Terceros:
+  - Administracion
+  - terceros
+  - ""
+  Tipos de Terceros:
+  - Administracion
+  - tipo_terceros
+  - ""
+  Contactos:
+  - Administracion
+  - contactos
+  - ""
+  Categorias de Terceros:
+  - Administracion
+  - ter_categorias
+  - ""
+  Tipos de Doc. de Id.:
+  - Administracion
+  - tipo_iddocumento
+  - ""
+Datos Auxiliares:
+- Administracion
+- cargos
+- ""
+- Cargos:
+  - Administracion
+  - cargos
+  - ""
+  Paises:
+  - Administracion
+  - paises
+  - ""
+  Ciudades:
+  - Administracion
+  - ciudades
+  - ""
+  Departamentos:
+  - Administracion
+  - departamentos
+  - ""
+  Formas de Pago:
+  - Administracion
+  - forma_pagos
+  - ""
+  Tipos de Documentos de Identidad:
+  - Administracion
+  - tipo_iddocumentos
+  - ""
+  Tipos de Terceros:
+  - maestros
+  - tipo_terceros
+  - ""
+  Tipos Productos:
+  - maestros
+  - tipo_productos
+  - ""
+SEGURIDAD:
+- Seguridad
+- permisos
+- ""
+- Modulos:
+  - Seguridad
+  - permisos
+  - ""
+  Roles:
+  - Seguridad
+  - roles
+  - ""
+  Usuarios:
+  - Seguridad
+  - users
+  - ""
+  Login:
+  - Seguridad
+  - account
+  - ""
+  Cambiar Clave:
+  - Seguridad
+  - ""
+  - ""
+  Logout:
+  - Seguridad
+  - account
+  - logout

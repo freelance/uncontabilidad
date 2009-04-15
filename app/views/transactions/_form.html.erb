@@ -1,0 +1,38 @@
+  <%= f.error_messages %>
+
+ 
+  <p>
+    <%= f.label :Tipodedocumento %><br />
+    <%= f.collection_select :doctipo_id, Doctipo.all( :order => :nombre ), :id, :to_s %>
+    <%= link_to "Nuevo", new_doctipo_path, :class => "nuevo" %>
+  </p>
+  
+    <p>
+    <%= f.label :Numero %><br />
+    <%= f.text_field :numero %>
+  </p>
+  
+  <p>
+    <%= f.label :Desde %>
+    <%= f.collection_select :from_id, Account.all( :order => :code ), :id, :to_s %>
+  </p>
+
+  <p>
+    <%= f.label :Hacia %>
+    <%= f.collection_select :to_id, Account.all( :order => :code ), :id, :to_s %>
+  </p>
+
+  <p>
+    <%= f.label :total %>
+    <%= f.text_field :total %>
+  </p>
+
+  <p>
+    CRUB porcentage
+    <%= f.text_field :value_crub_pc %> %
+  </p>
+
+  <p>
+    NQN porcentage
+    <%= f.text_field :value_nqn_pc %> %
+  </p>

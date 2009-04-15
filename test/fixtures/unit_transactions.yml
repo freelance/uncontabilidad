@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  from_id: 1
+  to_id: 1
+  transaction_id: 1
+  value: 9.99
+
+two:
+  from_id: 1
+  to_id: 1
+  transaction_id: 1
+  value: 9.99

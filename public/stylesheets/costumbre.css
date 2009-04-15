@@ -1,0 +1,8 @@
+a.nuevo {
+  font-size: smaller;
+  color: red;
+}
+
+tr.currency td, td.currency {
+  text-align: right;
+}

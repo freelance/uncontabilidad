@@ -1,0 +1,51 @@
+<%#= debug @accounts %>
+<%#= debug @Transactions %>
+<%#= debug @UnitTransactions %>
+<%#= javascript_include_tag "accounts" %>
+
+
+<span class="left"><h1 id="accounts_count"><%= 'Unidades Ejecutoras (%s)' % @uejecutoras.size %> |  Listado</h1>
+<h2> <td><span class="green">General   </span></td></h2>
+<%= link_to 'Nueva Unidad Ejecutora', new_uejecutora_path %></span></span>
+<h3 class="flash"><%= flash[:notice] %></h3>
+
+
+<table class="list">
+  <tr>
+    <th>Nombre de ue</th>
+    <th>Cta de  ingresos(?)</th>
+    <th>Cta de Egresos(?)</th>
+    <th>Rendiciones(?)</th>
+    <th>Departamento</th>
+  </tr>
+
+	<% for uejecutora in @uejecutoras %>
+<tr class="<%= cycle('even', 'odd') %>">
+      <td><%= link_to uejecutora.name	, uejecutora_path(uejecutora) %>  </td>
+      
+    </tr>
+  <% end %>
+  
+  <%# @uejecutoras.each do |u| %>
+    <tr class="<%#= cycle('even', 'odd') %>">
+      <td><%#=h u.name %></td>
+      <td><%#=h u.account %></td>
+      <td><%#=h u.descripcion %></td>
+      <td><%#=h u.persona %></td>
+      <td><%#=h u.departamento %></td>
+    </tr>
+  <%#end %>
+
+
+</table>
+
+<br />
+
+
+
+<%#= debug @accounts %>
+<%#= debug @Transactions %>
+<%#= debug @UnitTransactions %>
+<%#= javascript_include_tag "accounts" %>
+
+

@@ -1,0 +1,238 @@
+USER = operators
+
+FIX 1
+======
+User story : 
+ES: agregar cheques por servicios prestados de una laboratorio al systema u otro ingreso
+EN: add checks for services rendered to a laboratory system or other income
+--------------------
+ES: como un operador deseo ingresar cheques al sistema para transferir dinero hacia la cuenta del laboratorio y varias cuentas mas.
+EN: as an operator wishes to enter the system checks to transfer money into the account of the laboratory and several more accounts.
+
+acceptance test:
+-----------------------
+Spanish:
+ Dado que ingreso al website con el usuario FOO y la contraseña BAR
+ Y hago click en "4.1.2.1.01 INGRESO LABORATORIO CITOGENETICO" balance 200
+ Y hago click en nueva transaccion
+  Y pongo "11111111" en "Numenro de documento"
+  Y selecciono del combo "4.1.2.1.01 INGRESO LABORATORIO CITOGENETICO" en "FROM"
+  Y selecciono del combo "1.1.2 BANCO CREDICOOP CTA CTE Nº 5294-1 " en "TO"
+ Y pongo en 100 en "total" 
+ Y pongo 10 en "crub"
+ Y pongo %10 en NQN
+ Cuando hago click en "Crear"
+ Debo ver el listado de las transacciones de la cuenta
+ Y debo ver "4.1.2.1.01 INGRESO LABORATORIO CITOGENETICO" con el balance $100.0
+ Y debo ver "1.1.2 BANCO CREDICOOP CTA CTE Nº 5294-1" con el balance $80
+ Y debo ver "4.1.2.5 10 % CRUB" 	$10.00 	
+Y debo ver "4.1.2.6 10 % UNCo NEUQUEN" 	$10.00 	
+
+ 
+ English:
+ 	
+Given  entering the website with the username and password FOO BAR
+  And I click on "Cytogenetics Laboratory INGRESO 4.1.2.1.01" balance 200
+  And I click on new deals
+   And put "11111111" to "Registration # document"
+   And select from the combo "4.1.2.1.01 INGRESO Cytogenetics Laboratory" in "FROM"
+   And select from the combo "1.1.2 Credicoop Bank CTA CTE No. 5294-1" in "TO"
+  And put on 100 in "total"
+  And put in 10 "CRUB"
+  And put in 10% NQN
+  When I click on "Create"
+  I see the list of account transactions
+  And I see 4.1.2.1.01 INGRESO Cytogenetics Laboratory "with the balance $ 100.0
+  And I see "1.1.2 Credicoop Bank CTA CTE No. 5294-1" with the balance $ 80
+  And I see "4.1.2.5 CRUB% 10" $ 10.00
+And I see "4.1.2.6 10% UNCo NEUQUEN" $ 10.00
+ 
+ 
+
+FIX 2
+======
+User story : 
+EN: agregar facturas por servicios prestados de una laboratorio al systema 
+ES: Add invoices for services provided to a laboratory system
+--------------------
+ES: como un operador deseo ingresar facturas al sistema para transferir dinero hacia la cuenta dle laboratorio y varias cuentas mas.
+EN: as an operator wants to enter billing system to transfer money into the account dle laboratory and several more accounts.
+
+ES: Scenario: En la oficina del crub en la universidad se encuentran dos operadores, se presenta un cliente a pagar por un servicio prestado por el laboratorio de quimica con un analis de suelo por  $100. 
+EN: Scenary: In the office at the university CRUB are two operators, is a customer to pay for a service provided by the laboratory with a chemical analysis of soil for $ 100.
+
+acceptance test:
+-----------------------
+ Spanish:
+ 
+ Dado que ingreso al website con el usuario FOO y la contraseña BAR
+ Y hago click en "1.1.1 CAJA 	balance $640.00 	
+ Y hago click en nueva transaccion
+  Y pongo "11111111" en "Numenro de documento"
+  Y selecciono del combo "4.1.2.1.01 INGRESO LABORATORIO CITOGENETICO" en "TO"
+   Y pongo 100 en "total" 
+ Y pongo 10 en "%10 en crub"
+ Y pongo 10 en "%10 en NQN"
+ Cuando hago click en "Crear"
+ Debo ver el listado de las transacciones de la cuenta
+ Y debo ver en  "1.1.1 CAJA"  con balance $740.00 	
+ Y debo ver "4.1.2.1.01 INGRESO LABORATORIO CITOGENETICO" con el balance $180.0
+  Y debo ver "4.1.2.5 10 % CRUB" 	$20.00 	
+Y debo ver "4.1.2.6 10 % UNCo NEUQUEN" 	$20.00 	
+
+ Dado que el cliente paga por el servicio el operador debe darle una factura por $100 al cliente.
+Cuando el operador tiene el dinero,  debe realizar una transaccion seleccionando la cuenta destino del dinero y especificar si existen o no porcentajes para otras cuentas por la transaccion.
+Entonces el operador pone el dinero neto en la cuenta caja y el %80 para la cuenta del laboratorio que hizo el servicio y %10 para la cuenta del CRUB y %10 para la cuenta NQN
+
+English:
+	
+Since entering the website with the username and password FOO BAR
+  And I click on "1.1.1 BOX balance $ 640.00
+  And I click on new deals
+   And put "11111111" to "Registration # document"
+   And select from the combo "4.1.2.1.01 INGRESO Cytogenetics Laboratory" in "TO"
+   And put in 100 "total"
+   And put in 10 "10% in CRUB"
+   And put in 10 "10% NQN"
+  When I click on "Create"
+  I see the list of account transactions
+  And I see "1.1.1 box with balance $ 740.00
+  And I see 4.1.2.1.01 INGRESO Cytogenetics Laboratory "with the balance $ 180.0
+  And I see "4.1.2.5 CRUB% 10" $ 20.00
+  And I see "4.1.2.6 NEUQUEN UNCo% 10" $ 20.00
+
+  As the customer pays for the service operator must provide an invoice for $ 100 per customer.
+When the operator has the money, you must perform a transaction account by selecting the destination of the money and whether or not there are rates for other accounts of the transaction.
+Then the operator puts the money in the account net cash and 80% for the account of the laboratory that did the service and 10% to account for 10% and CRUB account NQN
+
+
+/*************************************/
+
+
+
+
+FIX 3
+======
+User story: 
+ES: agregar cuentas referenciales a la unidad ejecutora
+EN: add referencies accounts to Uejecutoras
+--------------------
+ES: Como operador quiero crear una nueva Uejecutora (lo que da el servicio de laboratorio) quiero referenciar dos cuentas en un uejecutora.
+EN: As a operator i wan to  create one new  Uejecutora (laboratory what give service)  than  I wan references two account at one uejecutora.
+
+
+ES: Scenario: En la oficina del crub en la universidad se encuentran dos operadores, se presenta un cliente a pagar por un servicio prestado por el laboratorio de quimica con un analis de suelo por  $100. 
+EN: Scenary: In the office at the university CRUB are two operators, is a customer to pay for a service provided by the laboratory with a chemical analysis of soil for $ 100.
+
+acceptance test:
+-----------------------
+
+Spanish:
+
+ Dado que ingreso al website con el usuario FOO y la contraseña BAR
+ Y hago click en el menu "Unidades ejecutoras" 	
+ Y hago click en "nueva unidad ejecutora"
+  Y pongo "laboratorio citogenetico" en "Nombre"
+  Y selecciono la cuenta Ingreso por citogenetico en cuenta1
+  Y selecciono la cuenta Egreso por  citogenetico en cuanta2
+  Y pongo .servicio de anlisis de citogenetica en "descripcion"
+  Y pongo jose en "persona"
+  Y pongo quimica en "departamento"
+  
+ Cuando hago click en "Crear"
+ 
+ Debo ver el listado de las unidades ejecutoras
+ Y debo ver en  "nombre "  laboratorio citogenetico 	
+ Y debo ver en la columna "cuenta ingreso"  ingreso por laboratorio citogenetico
+  Y debo ver en la columna "cuenta egreso"  egreso por laboratorio citogenetico
+ Y debo ver en al comuna "persona" jose
+ Y debo ver en la columna "departamento" quimica
+
+English:
+
+Since entering the website with the username and password FOO BAR
+  And I click the menu "executive units"
+  And I click on "new executive"
+   And put "cytogenetic laboratory" in "Name"
+   And select the account in Income cytogenetic cuenta1
+   Exit and select the account for cytogenetic in cuanta2
+   And put. Service in cytogenetic analysis of "alert"
+   And put Jose in "person"
+   And put in quimica "department"
+  
+  When I click on "Create"
+ 
+  I see the list of execution units
+  And I see "name" cytogenetic laboratory
+  And I see in the "income account" income cytogenetic laboratory
+   And I see in the column "account exit" exit cytogenetic laboratory
+  And I see in the common "person" jose
+  And I see in the "department" quimica
+
+
+FIX 4 
+=====
+historia de usuario 4: Pagar a las unidades ejecutoras y controlar el dinero rendido en comprobanntes (facturas)
+----------------------------
+
+Como un operador quiero pagar a las unidades ejecutoras parte o el total del dinero acumulado por los servicios ademas debo generar un control para sabes cuanto me devolvieron en comprobantes.
+ 
+Scenario: En la oficina del crub en la universidad se encuentran dos operadores, se presenta un responsable de la Unidad ejecutora  y solicita se le pague por los servicios  $1000.
+ 
+Test de aceptacion:
+---------------------------
+
+ Dado que ingreso al website con el usuario FOO y la contraseña BAR
+ Y hago click en "1.1.1 CAJA   balance $640.00   
+ Y hago click en nueva transaccion
+ Y pongo "2222222" en "Numenro de documento"
+ Y selecciono del combo "4.2.1.1 LABORATORIO DE ANALISIS CITOGENETICOS" en "TO"
+ Y pongo 1000 en "total"
+ Y pongo 0 en "%10 en crub"
+ Y pongo 0 en "%10 en NQN"
+ Cuando hago click en "Crear"
+ 
+Debo ver el listado de las transacciones de la cuenta
+ Y debo ver en "1.1.1 CAJA" con balance $ -360.00   
+ Y debo ver "4.2.1.1 LABORATORIO DE ANALISIS CITOGENETICOS" con el balance $1000.00
+ Y debo ver en "4.2.1.1 LABORATORIO DE ANALISIS CITOGENETICOS" una columna "RENDICIONES" con valor "1000.00"
+ Y debo poder  hacer click en la columna "Rendiciones" para agregar un comprobante(factura) 
+ Y debo ver  "pago  / rendido "  1000.00 /  50.00  
+ Y debo ver  un link para agregar  rendiciones nuevas
+ y debo ver el balance entre pago / rendido cada vez que agregue un comprobante.
+ Y debo ver "4.1.2.5 10 % CRUB"   $0.00   
+ Y debo ver "4.1.2.6 10 % UNCo NEUQUEN"   $0.00   
+ 
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+ Dado que ingreso al website con el usuario FOO y la contraseña BAR
+ Y hago click en la cuenta "caja"   
+ Y hago click en "nueva transaccion"
+ Y pongo "laboratorio citogenetico" en "Nombre"
+ Y selecciono la cuenta Ingreso por citogenetico en cuenta1
+ Y selecciono la cuenta Egreso por citogenetico en cuanta2
+ Y pongo .servicio de anlisis de citogenetica en "descripcion"
+ Y pongo jose en "persona"
+ Y pongo quimica en "departamento"
+  
+ Cuando hago click en "Crear"
+ 
+ Debo ver el listado de las unidades ejecutoras
+ Y debo ver en "nombre " laboratorio citogenetico   
+ Y debo ver en la columna "cuenta ingreso" ingreso por laboratorio citogenetico
+ Y debo ver en la columna "cuenta egreso" egreso por laboratorio citogenetico
+ Y debo ver en al comuna "persona" jose
+ Y debo ver en la columna "departamento" quimica
+ 
+

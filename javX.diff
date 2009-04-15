@@ -1,0 +1,313 @@
+From 333e5ee771d2f1e3ba87d450965ae84446c49da4 Mon Sep 17 00:00:00 2001
+From: Jason King <jk@silentcow.com>
+Date: Fri, 6 Mar 2009 14:34:56 +1100
+Subject: [PATCH 1/5] Handling balance errors.
+
+---
+ .gitignore                                 |    1 +
+ app/controllers/transactions_controller.rb |   21 +++++++--
+ app/models/account.rb                      |   18 +++++---
+ app/views/transactions/new.html.erb        |    5 +-
+ db/schema.rb                               |   68 ----------------------------
+ public/stylesheets/eltema.css              |   17 ++++++-
+ 6 files changed, 47 insertions(+), 83 deletions(-)
+ delete mode 100644 db/schema.rb
+
+diff --git a/app/controllers/transactions_controller.rb b/app/controllers/transactions_controller.rb
+index 6f5854a..63dbfe4 100644
+--- a/app/controllers/transactions_controller.rb
++++ b/app/controllers/transactions_controller.rb
+@@ -46,13 +46,26 @@ class TransactionsController < ApplicationController
+     @transaction = Transaction.new(params[:transaction])
+ 
+     respond_to do |format|
+-      if @transaction.save
++      begin
++        @transaction.save!
++      rescue Account::BalanceException => e
++        logger.error e
++        flash[:error] = e.message
++        format.html { render :action => "new" }
++        format.xml  {
++          xml = Builder::XmlMarkup.new
++          xml.instruct!
++          xml.errors{|e|e.error(e.message)}
++          render :xml => xml, :status => :unprocessable_entity
++        }
++      rescue Exception => e
++        logger.error e
++        format.html { render :action => "new" }
++        format.xml  { render :xml => @transaction.errors, :status => :unprocessable_entity }
++      else
+         flash[:notice] = 'Transaction was successfully created.'
+         format.html { redirect_to(account_transactions_path(@account)) }
+         format.xml  { render :xml => @transaction, :status => :created, :location => @transaction }
+-      else
+-        format.html { render :action => "new" }
+-        format.xml  { render :xml => @transaction.errors, :status => :unprocessable_entity }
+       end
+     end
+   end
+diff --git a/app/models/account.rb b/app/models/account.rb
+index 60f2133..d3e1104 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -1,4 +1,5 @@
+ class Account < ActiveRecord::Base
++  class BalanceException < Exception; end
+   named_scope :tops, :conditions => 'parent_id IS NULL', :order => :code
+ 
+   belongs_to :parent, :class_name => 'Account'
+@@ -36,17 +37,22 @@ class Account < ActiveRecord::Base
+   end
+ 
+   def decrease(p)
+-    unless self.balance >= p[:value].to_f &&
+-      self.balance_crub >= p[:value_crub].to_f &&
+-      self.balance_nqn >= p[:value_nqn].to_f
+-      raise "Not enough balance"
+-    end
+-
++    check_balances(p)
+     self.balance -= p[:value].to_f
+     self.balance_crub -= p[:value_crub].to_f
+     self.balance_nqn -= p[:value_nqn].to_f
+   end
+ 
++  def check_balances(p)
++    low_balances = []
++    low_balances << "Principal" unless self.balance      >= p[:value].to_f
++    low_balances << "CRUB"      unless self.balance_crub >= p[:value_crub].to_f
++    low_balances << "NQN"       unless self.balance_nqn  >= p[:value_nqn].to_f
++
++    raise BalanceException.new("Insufficient balance for: " + low_balances.join(', ')) if low_balances.size > 0
++  end
++
++
+   def level
+     return 1 unless self.parent
+     self.code.present? ? self.code.count('.') + 1 : self.parent.level + 1
+diff --git a/app/views/transactions/new.html.erb b/app/views/transactions/new.html.erb
+index 29baadf..0de7ccf 100644
+--- a/app/views/transactions/new.html.erb
++++ b/app/views/transactions/new.html.erb
+@@ -1,9 +1,10 @@
+ <span class="left"><h1 id="accounts_count"> | Nueva transaccion</h1>
+ <h2> <td><span class="green">General   </span></td></h2>
+ 
+-<h3 class="flash"><%= flash[:notice] %></h3>
+-
++<div><%= flash[:error] %></div>
+ 
++<% if flash[:error].present?  %><h3 class="flash error"><%=h flash[:error]  %></h3><% end -%>
++<% if flash[:notice].present? %><h3 class="flash notice"><%=h flash[:notice] %></h3><% end -%>
+ 
+ <% form_for([@account,@transaction]) do |f| %>
+   <%= render :partial => 'form', :locals => { :f => f } %>
+diff --git a/public/stylesheets/eltema.css b/public/stylesheets/eltema.css
+index 96c12c4..41add89 100644
+--- a/public/stylesheets/eltema.css
++++ b/public/stylesheets/eltema.css
+@@ -309,18 +309,29 @@ a.feed { background: url(../images/feed.png) no-repeat 1px 50%; padding: 2px 0px
+ 
+ div.flash {margin-top: 8px;}
+ 
++h3.flash {
++  padding: 0.2em 0.4em;
++}
++
++.flash.error {
++  background-color: yellow;
++  color: #a00;
++}
++
++.flash.notice {
++	color: #005f00;
++}
++
+ div.flash.error, #errorExplanation {
+-    background: url(../images/false.png) 8px 5px no-repeat;
++  background: url(../images/false.png) 8px 5px no-repeat;
+ 	background-color: #ffe3e3;
+ 	border-color: #dd0000;
+-	color: #550000;
+ }
+ 
+ div.flash.notice {
+     background: url(../images/true.png) 8px 5px no-repeat;
+ 	background-color: #dfffdf;
+ 	border-color: #9fcf9f;
+-	color: #005f00;
+ }
+ 
+ div.flash.warning {
+-- 
+1.6.1
+
+
+From 9fc88186a79563050600dc95376a86cc2ba43690 Mon Sep 17 00:00:00 2001
+From: Jason King <jk@silentcow.com>
+Date: Fri, 6 Mar 2009 21:38:22 +1100
+Subject: [PATCH 3/5] Fixup for balances and transfers
+
+---
+ app/models/account.rb                 |   22 +++++++++++-----------
+ app/views/transactions/index.html.erb |   10 ++++++----
+ public/stylesheets/costumbre.css      |    4 ++++
+ 3 files changed, 21 insertions(+), 15 deletions(-)
+
+diff --git a/app/models/account.rb b/app/models/account.rb
+index d3e1104..baadce2 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -20,6 +20,8 @@ class Account < ActiveRecord::Base
+   cattr_reader :per_page
+   @@per_page = 2
+ 
++  attr_accessor :total
++
+   def history(since = 7.days.ago)
+     Transaction.find(:all,
+                          :conditions => ['from_id = ? OR to_id = ? AND created_at > ?', self.id, self.id, since],
+@@ -30,6 +32,10 @@ class Account < ActiveRecord::Base
+     "#{self.code} #{self.name}"
+   end
+ 
++  def total
++    @total ||= self.balance + self.balance_crub + self.balance_nqn
++  end
++
+   def increase(p)
+     self.balance += p[:value].to_f
+     self.balance_crub += p[:value_crub].to_f
+@@ -37,19 +43,13 @@ class Account < ActiveRecord::Base
+   end
+ 
+   def decrease(p)
+-    check_balances(p)
+-    self.balance -= p[:value].to_f
+-    self.balance_crub -= p[:value_crub].to_f
+-    self.balance_nqn -= p[:value_nqn].to_f
++    _total = p.values.reduce{|x,y|x.to_f+y.to_f}
++    check_balances(_total)
++    self.balance -= _total
+   end
+ 
+-  def check_balances(p)
+-    low_balances = []
+-    low_balances << "Principal" unless self.balance      >= p[:value].to_f
+-    low_balances << "CRUB"      unless self.balance_crub >= p[:value_crub].to_f
+-    low_balances << "NQN"       unless self.balance_nqn  >= p[:value_nqn].to_f
+-
+-    raise BalanceException.new("Insufficient balance for: " + low_balances.join(', ')) if low_balances.size > 0
++  def check_balances(t)
++    raise BalanceException.new("Insufficient balance") unless self.balance >= t
+   end
+ 
+ 
+diff --git a/app/views/transactions/index.html.erb b/app/views/transactions/index.html.erb
+index ea1584e..605885b 100644
+--- a/app/views/transactions/index.html.erb
++++ b/app/views/transactions/index.html.erb
+@@ -11,11 +11,13 @@
+     <th>Balance</th>
+     <th>CRUB Balance</th>
+     <th>NQN Balance</th>
++    <th>Total</th>
+   </tr>
+-  <tr>
++  <tr class="currency">
+     <td><%= number_to_currency(@account.balance) %></td>
+     <td><%= number_to_currency(@account.balance_crub) %></td>
+     <td><%= number_to_currency(@account.balance_nqn) %></td>
++    <td><%= number_to_currency(@account.total) %></td>
+   </tr>
+ </table>
+ 
+@@ -41,9 +43,9 @@
+  
+     <td><%= link_to h(t.from), account_path(t.from) %></td>
+     <td><%= link_to h(t.to)  , account_path(t.to)   %></td>
+-    <td><%=number_to_currency t.value %></td>
+-    <td><%=number_to_currency t.value_crub %></td>
+-    <td><%=number_to_currency t.value_nqn %></td>
++    <td class="currency"><%=number_to_currency t.value %></td>
++    <td class="currency"><%=number_to_currency t.value_crub %></td>
++    <td class="currency"><%=number_to_currency t.value_nqn %></td>
+     <td><%= link_to 'Edit', edit_account_transaction_path(@account,t) %></td>
+     <td><%= link_to 'Destroy', account_transaction_path(@account,t), :confirm => 'Estas seguro?', :method => :delete %></td>
+   </tr>
+diff --git a/public/stylesheets/costumbre.css b/public/stylesheets/costumbre.css
+index 3e784cc..abcfaf3 100644
+--- a/public/stylesheets/costumbre.css
++++ b/public/stylesheets/costumbre.css
+@@ -2,3 +2,7 @@ a.nuevo {
+   font-size: smaller;
+   color: red;
+ }
++
++tr.currency td, td.currency {
++  text-align: right;
++}
+-- 
+1.6.1
+
+
+From 9b26a594d36fe15b8cb21c326a7f5626b31828ec Mon Sep 17 00:00:00 2001
+From: Jason King <jk@silentcow.com>
+Date: Fri, 6 Mar 2009 21:41:28 +1100
+Subject: [PATCH 4/5] Small fixup for total accessor
+
+---
+ app/models/account.rb |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/app/models/account.rb b/app/models/account.rb
+index baadce2..de6d9cb 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -20,7 +20,7 @@ class Account < ActiveRecord::Base
+   cattr_reader :per_page
+   @@per_page = 2
+ 
+-  attr_accessor :total
++  attr_reader :total
+ 
+   def history(since = 7.days.ago)
+     Transaction.find(:all,
+-- 
+1.6.1
+
+
+From 6790c3d4447c8b20ee9144454989b50558b4fa40 Mon Sep 17 00:00:00 2001
+From: Jason King <jk@silentcow.com>
+Date: Fri, 6 Mar 2009 21:58:30 +1100
+Subject: [PATCH 5/5] Able to have negative amounts in accounts
+
+---
+ app/models/account.rb |    6 ------
+ 1 files changed, 0 insertions(+), 6 deletions(-)
+
+diff --git a/app/models/account.rb b/app/models/account.rb
+index de6d9cb..aaf4d8b 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -44,15 +44,9 @@ class Account < ActiveRecord::Base
+ 
+   def decrease(p)
+     _total = p.values.reduce{|x,y|x.to_f+y.to_f}
+-    check_balances(_total)
+     self.balance -= _total
+   end
+ 
+-  def check_balances(t)
+-    raise BalanceException.new("Insufficient balance") unless self.balance >= t
+-  end
+-
+-
+   def level
+     return 1 unless self.parent
+     self.code.present? ? self.code.count('.') + 1 : self.parent.level + 1
+-- 
+1.6.1
+

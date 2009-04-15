@@ -1,0 +1,23 @@
+<h1>Editar Cuentas</h1>
+
+<% form_for(@account) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :parent_id %><br />
+    <%= f.collection_select :parent_id, Account.all(:order => :code), :id, :to_s, :include_blank => true %>
+  </p>
+  <p>
+    <%= f.label :Nombre %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :Balance %><br />
+    <%= f.text_field :balance %>
+  </p>
+  <p>
+    <%= f.submit "Actualizar" , :or => link_to ('Atras', accounts_path) %>
+   
+  </p>
+<% end %>
+

@@ -1,0 +1,24 @@
+
+<span class="left"><h1 id="accounts_count"><%= 'Departamentos(%s)' % @departamentos.size %> | Listando departamentos</h1>
+<h2> <td><span class="green">General   </span></td></h2>
+<%= link_to 'Nuevo departamento', new_departamento_path %></span></span>
+<h3 class="flash"><%= flash[:notice] %></h3>
+
+<table class="list">
+  <tr>
+    <th>Nombre</th>
+  </tr>
+
+<% for departamento in @departamentos %>
+  <tr  class="<%= cycle('odd','par') %>">
+    <td><%=h departamento.nombre %></td>
+    <td><%= link_to 'mostrar', departamento %></td>
+    <td><%= link_to 'Editar', edit_departamento_path(departamento) %></td>
+    <td><%= link_to 'Destruir', departamento, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+

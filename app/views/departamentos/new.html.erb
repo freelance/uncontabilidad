@@ -1,0 +1,20 @@
+
+<span class="left"><h1 id="accounts_count">Nuevo Departamento</h1>
+<h2> <td><span class="green">General   </span></td></h2>
+</span></span>
+<h3 class="flash"><%= flash[:notice] %></h3>
+
+
+<% form_for(@departamento) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.submit "Crear" %>
+  </p>
+<% end %>
+
+<%= link_to 'Atras', flash[:back] || departamentos_path %>
